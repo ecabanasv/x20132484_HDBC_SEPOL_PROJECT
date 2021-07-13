@@ -6,15 +6,28 @@
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
       <li id="home"><a class="nav-link px-2 link-secondary" href="/">HOME</a></li>
-      <li id="instructions"><a class="nav-link px-2 link-dark" href="/instructions">INSTRUCTIONS</a></li>
       <li id="register"><a class="nav-link px-2 link-dark" href="/register">REGISTER BIKE</a></li>
-      <li id="management"><a class="nav-link px-2 link-dark" href="/management">MANAGEMENT</a></li>
-      <li id="about"><a class="nav-link px-2 link-dark" href="/about">ABOUT</a></li>
+      <!-- <li id="management"><a class="nav-link px-2 link-dark" href="/management">MANAGEMENT</a></li> -->
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          MANAGEMENT
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="/showdetails">Show details</a></li>
+          <li><a class="dropdown-item" href="/adddetails">Add details</a></li>
+          <li><a class="dropdown-item" href="/transferownership">Transfer ownership</a></li>
+          <li><a class="dropdown-item" href="/renounceownership">Renounce ownership</a></li>
+        </ul>
+      </li>
+
+      <li id="faq"><a class="nav-link px-2 link-dark" href="/FAQ">FAQ</a></li>
+      <li id="about"><a class="nav-link px-2 link-dark" href="/contact">CONTACT</a></li>
     </ul>
 
     <div class="col-md-3 text-end">
-      <button type="button" class="btn btn-outline-primary me-2">Login</button>
-      <button type="button" class="btn btn-primary">Sign-up</button>
+      <button type="button" class="btn btn-outline-dark">Login</button>
+      <button type="button" class="btn btn-outline-secondary">Sign-up</button>
     </div>
   </header>
 </div>
