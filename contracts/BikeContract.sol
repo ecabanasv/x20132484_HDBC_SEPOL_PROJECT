@@ -53,6 +53,10 @@ contract BikeContract {
   );
 
       event transferDone(
+      uint ownerID,
+      string name,
+      string contact_no,
+      string email,
       address user_address
   );
 
@@ -94,9 +98,17 @@ contract BikeContract {
       emit detailsAdded(_details);
   }
 
-  function transferOwnership(uint _id, address _newAddress) public {
+  function transferOwnership(uint _id,  string memory _name, string memory _contact_no, string memory _email, address _newAddress) public {
       bikes[_id].user_address = _newAddress;
-      emit transferDone(_newAddress);
+      _updateOwner(_id, _name, _contact_no, _email, _newAddress);
+      emit transferDone(_id, _name, _contact_no, _email, _newAddress);
+  }
+
+  function _updateOwner(uint _id, string memory _name, string memory _contact_no, string memory _email, address _user_address) private {
+      owner[_id].name = _name;
+      owner[_id].contact_no = _contact_no;
+      owner[_id].email = _email;
+      owner[_id].user_address = _user_address;
   }
 
   function renounceOwnership(uint _id) public {
