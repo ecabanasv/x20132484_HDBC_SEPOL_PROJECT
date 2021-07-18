@@ -17,7 +17,11 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "@openzeppelin/test-environment": "^0.1.9",
+    "@openzeppelin/test-helpers": "^0.5.12",
+    "chai": "^4.3.4",
     "ganache-cli": "^6.12.2",
+    "mocha": "^8.1.2",
     "truffle": "^5.4.0"
   },
   "engines": {
