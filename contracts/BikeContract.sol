@@ -77,8 +77,8 @@ contract BikeContract {
     return _bikes;
   }
 
-    function showOwnerDetails() public view returns (ownerDetails[] memory) {
-    ownerDetails[] memory _owner = new ownerDetails[](bikeCounter);
+  function showOwnerDetails() public view returns (ownerDetails[] memory) {
+    ownerDetails[] memory _owner = new ownerDetails[](ownerCounter);
     for (uint i = 0; i < ownerCounter; i++) {
         _owner[i] = owner[i];
     }
