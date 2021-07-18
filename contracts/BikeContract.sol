@@ -4,10 +4,9 @@ pragma experimental ABIEncoderV2;
 
 contract BikeContract {
 
-  uint public bikeCounter = 0;
-  uint public ownerCounter = 0;
-  
-  address public emptyAddress = 0x0000000000000000000000000000000000000000;
+  uint private bikeCounter = 0;
+  uint private ownerCounter = 0;
+  address private emptyAddress = 0x0000000000000000000000000000000000000000;
 
   struct bikeDetails {
     uint bikeID;
@@ -98,28 +97,28 @@ contract BikeContract {
     return _owner;
   }
 
-    function _updateOwner(uint _id, string memory _name, string memory _contact_no, string memory _email, address _user_address) private {
-      owner[_id].name = _name;
-      owner[_id].contact_no = _contact_no;
-      owner[_id].email = _email;
-      owner[_id].user_address = _user_address;
+  function _updateOwner(uint _id, string memory _name, string memory _contact_no, string memory _email, address _user_address) private {
+    owner[_id].name = _name;
+    owner[_id].contact_no = _contact_no;
+    owner[_id].email = _email;
+    owner[_id].user_address = _user_address;
   }
 
     /* Other functions */
 
   function addDetails(uint _id, string memory _details) public {
-      bikes[_id].details = _details;
-      emit detailsAdded(_details);
+    bikes[_id].details = _details;
+    emit detailsAdded(_details);
   }
 
   function transferOwnership(uint _id,  string memory _name, string memory _contact_no, string memory _email, address _newAddress) public {
-      bikes[_id].user_address = _newAddress;
-      _updateOwner(_id, _name, _contact_no, _email, _newAddress);
-      emit transferDone(_id, _name, _contact_no, _email, _newAddress);
+    bikes[_id].user_address = _newAddress;
+    _updateOwner(_id, _name, _contact_no, _email, _newAddress);
+    emit transferDone(_id, _name, _contact_no, _email, _newAddress);
   }
 
   function renounceOwnership(uint _id) public {
-      bikes[_id].user_address = emptyAddress;
-      emit renounceDone(emptyAddress);
+    bikes[_id].user_address = emptyAddress;
+    emit renounceDone(emptyAddress);
   }
 }
