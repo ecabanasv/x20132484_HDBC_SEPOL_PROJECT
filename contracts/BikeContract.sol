@@ -52,16 +52,16 @@ contract BikeContract {
       string details
   );
 
-      event transferDone(
-      uint ownerID,
-      string name,
-      string contact_no,
-      string email,
-      address user_address
+  event transferDone(
+    uint ownerID,
+    string name,
+    string contact_no,
+    string email,
+    address user_address
   );
 
-      event renounceDone(
-      address user_address
+  event renounceDone(
+    address user_address
   );
 
     /* Bike functions */

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "coverage": "truffle run coverage"
   },
   "dependencies": {
     "bootstrap": "^5.0.2",
@@ -16,8 +17,12 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
+    "eth-gas-reporter": "^0.2.22",
     "ganache-cli": "^6.12.2",
     "mocha": "^8.1.2",
+    "prettier": "^2.3.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.16",
+    "solidity-coverage": "^0.7.16",
     "truffle": "^5.4.0"
   },
   "engines": {
