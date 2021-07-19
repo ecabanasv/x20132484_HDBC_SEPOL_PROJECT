@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/24</span>
+        <span class='fraction'>0/21</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/26</span>
+        <span class='fraction'>0/23</span>
       </div>
     </div>
   </div>
@@ -160,15 +160,7 @@
 115
 116
 117
-118
-119
-120
-121
-122
-123
-124</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+118</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -238,7 +230,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -262,15 +253,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -280,7 +269,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -303,9 +291,7 @@ contract BikeContract {
     uint bikeID;
     string make;
     string model;
-    string colour;
-    string typeBike;
-    string frame_no;
+    string frame;
     string details;
     address user_address;
   }
@@ -313,9 +299,7 @@ contract BikeContract {
   struct ownerDetails {
     uint ownerID;
     string name;
-    string contact_no;
     string email;
-    address user_address;
   }
 &nbsp;
   mapping(uint =&gt; bikeDetails) public bikes;
@@ -326,42 +310,43 @@ contract BikeContract {
     uint bikeID,
     string make,
     string model,
-    string colour,
-    string typeBike,
-    string frame_no,
+    string frame,
     string details
   );
 &nbsp;
   event OwnerAdded(
     uint ownerID,
     string name,
-    string contact_no,
     string email
   );
 &nbsp;
-    event detailsAdded(
-      string details
+  event OwnerUpdated(
+    uint ownerID,
+    string name,
+    string email
+  );
+&nbsp;
+  event detailsAdded(
+    uint id,
+    string details
   );
 &nbsp;
   event transferDone(
     uint ownerID,
-    string name,
-    string contact_no,
-    string email,
     address user_address
   );
 &nbsp;
   event renounceDone(
+    uint id,
     address user_address
   );
 &nbsp;
     /* Bike functions */
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function newBikeSM(string memory _make, string memory _model, string memory _colour, string memory _type, string memory _frame_no, string memory _details, string memory _name, string memory _contact_no, string memory _email) public {</span>
-<span class="cstat-no" title="statement not covered" >    bikes[bikeCounter] = bikeDetails(bikeCounter, _make, _model, _colour, _type, _frame_no, _details, msg.sender)</span>;
+<span class="fstat-no" title="function not covered" >  function newBikeSM(string memory _make, string memory _model, string memory _frame, string memory _details) public {</span>
+<span class="cstat-no" title="statement not covered" >    bikes[bikeCounter] = bikeDetails(bikeCounter, _make, _model, _frame, _details, msg.sender)</span>;
     bikeCounter++;
-<span class="cstat-no" title="statement not covered" >    emit BikeCreated(bikeCounter, _make, _model, _colour, _type, _frame_no, _details);</span>
-<span class="cstat-no" title="statement not covered" >    _newOwner(_name, _contact_no, _email)</span>;
+<span class="cstat-no" title="statement not covered" >    emit BikeCreated(bikeCounter, _make, _model, _frame, _details);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function showListBikeDetails() public view returns (bikeDetails[] memory) {</span>
@@ -374,43 +359,40 @@ contract BikeContract {
 &nbsp;
   /* Owner functions */
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function _newOwner(string memory _name, string memory _contact_no, string memory _email) private {</span>
-<span class="cstat-no" title="statement not covered" >    owner[ownerCounter] = ownerDetails(ownerCounter, _name, _contact_no, _email, msg.sender)</span>;
+<span class="fstat-no" title="function not covered" >  function newOwner(string memory _name, string memory _email) public {</span>
+<span class="cstat-no" title="statement not covered" >    owner[ownerCounter] = ownerDetails(ownerCounter, _name, _email)</span>;
     ownerCounter++;
-<span class="cstat-no" title="statement not covered" >    emit OwnerAdded(ownerCounter, _name, _contact_no, _email);</span>
+<span class="cstat-no" title="statement not covered" >    emit OwnerAdded(ownerCounter, _name, _email);</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function showOwnerDetails() public view returns (ownerDetails[] memory) {</span>
+<span class="fstat-no" title="function not covered" >  function updateOwner(uint _ownerID, string memory _name, string memory _email) public {</span>
+<span class="cstat-no" title="statement not covered" >    owner[_ownerID].name = _name</span>;
+<span class="cstat-no" title="statement not covered" >    owner[_ownerID].email = _email</span>;
+<span class="cstat-no" title="statement not covered" >    emit OwnerUpdated(_ownerID, _name, _email);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function showListOwnerDetails() public view returns (ownerDetails[] memory) {</span>
 <span class="cstat-no" title="statement not covered" >    ownerDetails[] memory _owner = new ownerDetails[](ownerCounter);</span>
 <span class="cstat-no" title="statement not covered" >    for (uint i = 0; i &lt; ownerCounter; i++) {</span>
 <span class="cstat-no" title="statement not covered" >        _owner[i] = owner[i]</span>;
     }
 <span class="cstat-no" title="statement not covered" >    return _owner;</span>
   }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  function _updateOwner(uint _id, string memory _name, string memory _contact_no, string memory _email, address _user_address) private {</span>
-<span class="cstat-no" title="statement not covered" >    owner[_id].name = _name</span>;
-<span class="cstat-no" title="statement not covered" >    owner[_id].contact_no = _contact_no</span>;
-<span class="cstat-no" title="statement not covered" >    owner[_id].email = _email</span>;
-<span class="cstat-no" title="statement not covered" >    owner[_id].user_address = _user_address</span>;
-  }
-&nbsp;
     /* Other functions */
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function addDetails(uint _id, string memory _details) public {</span>
 <span class="cstat-no" title="statement not covered" >    bikes[_id].details = _details</span>;
-<span class="cstat-no" title="statement not covered" >    emit detailsAdded(_details);</span>
+<span class="cstat-no" title="statement not covered" >    emit detailsAdded(_id, _details);</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function transferOwnership(uint _id,  string memory _name, string memory _contact_no, string memory _email, address _newAddress) public {</span>
+<span class="fstat-no" title="function not covered" >  function transferOwnership(uint _id, address _newAddress) public {</span>
 <span class="cstat-no" title="statement not covered" >    bikes[_id].user_address = _newAddress</span>;
-<span class="cstat-no" title="statement not covered" >    _updateOwner(_id, _name, _contact_no, _email, _newAddress)</span>;
-<span class="cstat-no" title="statement not covered" >    emit transferDone(_id, _name, _contact_no, _email, _newAddress);</span>
+<span class="cstat-no" title="statement not covered" >    emit transferDone(_id, _newAddress);</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function renounceOwnership(uint _id) public {</span>
 <span class="cstat-no" title="statement not covered" >    bikes[_id].user_address = emptyAddress</span>;
-<span class="cstat-no" title="statement not covered" >    emit renounceDone(emptyAddress);</span>
+<span class="cstat-no" title="statement not covered" >    emit renounceDone(_id, emptyAddress);</span>
   }
 }</pre></td></tr>
 </table></pre>
@@ -418,7 +400,7 @@ contract BikeContract {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jul 18 2021 22:09:16 GMT+0100 (Western European Summer Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 19 2021 09:55:21 GMT+0100 (Western European Summer Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
