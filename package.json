@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "slint": "solhint \"contracts/**/*.sol\"",
     "coverage": "truffle run coverage"
   },
   "dependencies": {

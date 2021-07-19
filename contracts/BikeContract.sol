@@ -12,9 +12,7 @@ contract BikeContract {
     uint bikeID;
     string make;
     string model;
-    string colour;
-    string typeBike;
-    string frame_no;
+    string frame;
     string details;
     address user_address;
   }
@@ -22,9 +20,7 @@ contract BikeContract {
   struct ownerDetails {
     uint ownerID;
     string name;
-    string contact_no;
     string email;
-    address user_address;
   }
 
   mapping(uint => bikeDetails) public bikes;
@@ -35,42 +31,44 @@ contract BikeContract {
     uint bikeID,
     string make,
     string model,
-    string colour,
-    string typeBike,
-    string frame_no,
+    string frame,
     string details
   );
 
   event OwnerAdded(
     uint ownerID,
     string name,
-    string contact_no,
     string email
   );
 
-    event detailsAdded(
-      string details
+  event OwnerUpdated(
+    uint ownerID,
+    string name,
+    string email
+  );
+
+  event detailsAdded(
+    uint id,
+    string details
   );
 
   event transferDone(
     uint ownerID,
-    string name,
-    string contact_no,
-    string email,
     address user_address
   );
 
   event renounceDone(
+    uint id,
     address user_address
   );
 
     /* Bike functions */
 
-  function newBikeSM(string memory _make, string memory _model, string memory _colour, string memory _type, string memory _frame_no, string memory _details, string memory _name, string memory _contact_no, string memory _email) public {
-    bikes[bikeCounter] = bikeDetails(bikeCounter, _make, _model, _colour, _type, _frame_no, _details, msg.sender);
+  function newBike(string memory _make, string memory _model, string memory _frame, string memory _details, string memory _name, string memory _email) public {
+    bikes[bikeCounter] = bikeDetails(bikeCounter, _make, _model, _frame, _details, msg.sender);
     bikeCounter++;
-    emit BikeCreated(bikeCounter, _make, _model, _colour, _type, _frame_no, _details);
-    _newOwner(_name, _contact_no, _email);
+    emit BikeCreated(bikeCounter, _make, _model, _frame, _details);
+    _newOwner(_name, _email);
   }
 
   function showListBikeDetails() public view returns (bikeDetails[] memory) {
@@ -81,44 +79,49 @@ contract BikeContract {
     return _bikes;
   }
 
-  /* Owner functions */
-
-  function _newOwner(string memory _name, string memory _contact_no, string memory _email) private {
-    owner[ownerCounter] = ownerDetails(ownerCounter, _name, _contact_no, _email, msg.sender);
-    ownerCounter++;
-    emit OwnerAdded(ownerCounter, _name, _contact_no, _email);
+    function showBikeDetails(uint _bikeID) public view returns (string memory, string memory, string memory) {
+    return (bikes[_bikeID].make, bikes[_bikeID].model, bikes[_bikeID].frame);
   }
 
-  function showOwnerDetails() public view returns (ownerDetails[] memory) {
+  /* Owner functions */
+
+  function _newOwner(string memory _name, string memory _email) private {
+    owner[ownerCounter] = ownerDetails(bikeCounter, _name, _email);
+    ownerCounter++;
+    emit OwnerAdded(bikeCounter, _name, _email);
+  }
+
+  function updateOwner(uint _ownerID, string memory _name, string memory _email) public {
+    owner[_ownerID].name = _name;
+    owner[_ownerID].email = _email;
+    emit OwnerUpdated(_ownerID, _name, _email);
+  }
+
+  function showOwnerDetails(uint _ownerID) public view returns (string memory, string memory) {
+    return (owner[_ownerID].name, owner[_ownerID].email);
+  }
+
+  function showListOwnerDetails() public view returns (ownerDetails[] memory) {
     ownerDetails[] memory _owner = new ownerDetails[](ownerCounter);
     for (uint i = 0; i < ownerCounter; i++) {
         _owner[i] = owner[i];
     }
     return _owner;
   }
-
-  function _updateOwner(uint _id, string memory _name, string memory _contact_no, string memory _email, address _user_address) private {
-    owner[_id].name = _name;
-    owner[_id].contact_no = _contact_no;
-    owner[_id].email = _email;
-    owner[_id].user_address = _user_address;
-  }
-
     /* Other functions */
 
   function addDetails(uint _id, string memory _details) public {
     bikes[_id].details = _details;
-    emit detailsAdded(_details);
+    emit detailsAdded(_id, _details);
   }
 
-  function transferOwnership(uint _id,  string memory _name, string memory _contact_no, string memory _email, address _newAddress) public {
+  function transferOwnership(uint _id, address _newAddress) public {
     bikes[_id].user_address = _newAddress;
-    _updateOwner(_id, _name, _contact_no, _email, _newAddress);
-    emit transferDone(_id, _name, _contact_no, _email, _newAddress);
+    emit transferDone(_id, _newAddress);
   }
 
   function renounceOwnership(uint _id) public {
     bikes[_id].user_address = emptyAddress;
-    emit renounceDone(emptyAddress);
+    emit renounceDone(_id, emptyAddress);
   }
 }
