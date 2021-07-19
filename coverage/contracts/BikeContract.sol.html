@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">41.67% </span>
+        <span class="strong">70.83% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>10/24</span>
+        <span class='fraction'>17/24</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">40% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/10</span>
+        <span class='fraction'>6/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">46.15% </span>
+        <span class="strong">73.08% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/26</span>
+        <span class='fraction'>19/26</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -237,10 +237,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,23 +258,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -390,18 +390,18 @@ contract BikeContract {
     emit OwnerAdded(bikeCounter, _name, _email);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function updateOwner(uint _ownerID, string memory _name, string memory _email) public {</span>
-<span class="cstat-no" title="statement not covered" >    owner[_ownerID].name = _name</span>;
-<span class="cstat-no" title="statement not covered" >    owner[_ownerID].email = _email</span>;
-<span class="cstat-no" title="statement not covered" >    emit OwnerUpdated(_ownerID, _name, _email);</span>
+  function updateOwner(uint _ownerID, string memory _name, string memory _email) public {
+    owner[_ownerID].name = _name;
+    owner[_ownerID].email = _email;
+    emit OwnerUpdated(_ownerID, _name, _email);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function showListOwnerDetails() public view returns (ownerDetails[] memory) {</span>
-<span class="cstat-no" title="statement not covered" >    ownerDetails[] memory _owner = new ownerDetails[](ownerCounter);</span>
-<span class="cstat-no" title="statement not covered" >    for (uint i = 0; i &lt; ownerCounter; i++) {</span>
-<span class="cstat-no" title="statement not covered" >        _owner[i] = owner[i]</span>;
+  function showListOwnerDetails() public view returns (ownerDetails[] memory) {
+    ownerDetails[] memory _owner = new ownerDetails[](ownerCounter);
+    for (uint i = 0; i &lt; ownerCounter; i++) {
+        _owner[i] = owner[i];
     }
-<span class="cstat-no" title="statement not covered" >    return _owner;</span>
+    return _owner;
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function showOwnerDetails(uint _ownerID) public view returns (string memory, string memory) {</span>
@@ -430,7 +430,7 @@ contract BikeContract {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 19 2021 20:11:40 GMT+0100 (Western European Summer Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 19 2021 21:06:14 GMT+0100 (Western European Summer Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -81,15 +81,28 @@ contract("BikeContract", function (accounts) {
   
     /* showListOwnerDetails */
   
-    it("showListOwnerDetails: Can show a specific owners registered", async () => {});
-  
-    /* showListOwnerDetails */
-  
-    it("showListOwnerDetails: Can show the list of owners registered", async () => {});
+    it("showListOwnerDetails: Can show the list of owners registered", async () => {
+      const instance = await BikeContract.deployed();
+      const bike1 = await instance.newBike("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com", {from:accounts[0]});
+      const bike2 = await instance.newBike("Carrefour", "2016", "892342", "-", "Juan", "juan@gmail.com", {from:accounts[0]});
+      const bike3 = await instance.newBike("Nike", "2010", "312456", "-", "Pepe", "pepe@gmail.com", {from:accounts[0]});
+      const bike4 = await instance.newBike("Adidas", "2004", "345345", "-", "Luis", "luis@gmail.com", {from:accounts[0]});
+      const ownerList = await instance.showListOwnerDetails();
+      //Bike 1: Orbea
+      assert.equal(ownerList[1][1], "Enrique");
+      //Bike 2: 2016
+      assert.equal(ownerList[2][2], "juan@gmail.com");
+      //Bike 3: 312456
+      assert.equal(ownerList[3][1], "Pepe");
+      //Bike 4: -
+      assert.equal(ownerList[4][2], "luis@gmail.com");
+    });
   
     /* showOwnerDetails */
   
-    it("showOwnerDetails: Can show a specific owner registered", async () => {});
+    it("showOwnerDetails: Can show a specific owners registered", async () => {});
+  
+
     });
   
   describe("@ Add details, transferOwnership and renounceOwnership functions", () => {
