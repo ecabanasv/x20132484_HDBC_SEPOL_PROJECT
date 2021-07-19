@@ -52,9 +52,7 @@ contract("BikeContract", function (accounts) {
     it("showBikeDetails: Can show a specific bike registered", async () => {
       const instance = await BikeContract.deployed();
       const bike1 = await instance.newBike("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com", {from:accounts[0]});
-      const bike2 = await instance.newBike("Carrefour", "2016", "892342", "-", "Juan", "juan@gmail.com", {from:accounts[0]});
-      const bike3 = await instance.newBike("Nike", "2010", "312456", "-", "Pepe", "pepe@gmail.com", {from:accounts[0]});
-      const bike4 = await instance.newBike("Adidas", "2004", "345345", "-", "Luis", "luis@gmail.com", {from:accounts[0]});
+      //Get bike 1 result
       const result = await instance.showBikeDetails(0);
       //Bike 1: Orbea
       assert.equal(result[0], "Orbea");
@@ -69,11 +67,17 @@ contract("BikeContract", function (accounts) {
   describe("@ Owner functions", () => {
     /* _newOwner */
   
-    it("_newOwner: Can register new owner", async () => {});
-  
-    /* updateOwner */
-  
-    it("updateOwner: Can update a specific registered owner", async () => {});
+    it("updateOwner: Can update a specific registered owner", async () => {
+      const name = "Rafael";
+      const email = "rafael@gmail.com";
+      const instance = await BikeContract.deployed();
+      await instance.newBike("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com", {from:accounts[0]});
+      const owner = await instance.updateOwner(0, "Rafael", "rafael@gmail.com", {from:accounts[0]});
+      // test BikeCreated event
+      truffleAssert.eventEmitted(owner, 'OwnerUpdated', (ev) => {
+        return ev.ownerID == 0 && ev.name == name && ev.email == email
+      })
+    });
   
     /* showListOwnerDetails */
   
