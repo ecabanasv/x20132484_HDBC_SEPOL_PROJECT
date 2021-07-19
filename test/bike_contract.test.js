@@ -47,11 +47,25 @@ contract("BikeContract", function (accounts) {
       //Bike 4: -
       assert.equal(bikeList[4][4], "-");
     });
+    /* showBikeDetails */
+
+    it("showBikeDetails: Can show a specific bike registered", async () => {
+      const instance = await BikeContract.deployed();
+      const bike1 = await instance.newBike("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com", {from:accounts[0]});
+      const bike2 = await instance.newBike("Carrefour", "2016", "892342", "-", "Juan", "juan@gmail.com", {from:accounts[0]});
+      const bike3 = await instance.newBike("Nike", "2010", "312456", "-", "Pepe", "pepe@gmail.com", {from:accounts[0]});
+      const bike4 = await instance.newBike("Adidas", "2004", "345345", "-", "Luis", "luis@gmail.com", {from:accounts[0]});
+      const result = await instance.showBikeDetails(0);
+      //Bike 1: Orbea
+      assert.equal(result[0], "Orbea");
+      //Bike 1: 2019
+      assert.equal(result[1], "2019");
+      //Bike 1: 123123
+      assert.equal(result[2], "123123");
+    });
   });
 
-  /* showBikeDetails */
 
-  it("showBikeDetails: Can show a specific bike registered", async () => {});
   describe("@ Owner functions", () => {
     /* _newOwner */
   
