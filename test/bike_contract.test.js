@@ -88,13 +88,13 @@ contract("BikeContract", function (accounts) {
       const bike3 = await instance.newBike("Nike", "2010", "312456", "-", "Pepe", "pepe@gmail.com", {from:accounts[0]});
       const bike4 = await instance.newBike("Adidas", "2004", "345345", "-", "Luis", "luis@gmail.com", {from:accounts[0]});
       const ownerList = await instance.showListOwnerDetails();
-      //Bike 1: Orbea
+      //Owner 1
       assert.equal(ownerList[1][1], "Enrique");
-      //Bike 2: 2016
+      //Owner 2
       assert.equal(ownerList[2][2], "juan@gmail.com");
-      //Bike 3: 312456
+      //Owner 3
       assert.equal(ownerList[3][1], "Pepe");
-      //Bike 4: -
+      //Owner 4
       assert.equal(ownerList[4][2], "luis@gmail.com");
     });
   
