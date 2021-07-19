@@ -10,4 +10,27 @@ contract("BikeContract", function (/* accounts */) {
     await BikeContract.deployed();
     return assert.isTrue(true);
   });
+
+/* newBike */
+
+/* showListBikeDetails */
+
+/* showBikeDetails */
+
+/* _newOwner */
+
+/* updateOwner */
+
+/* showListOwnerDetails */
+
+/* showOwnerDetails */
+
+/* showOwnerDetails */
+
+/* addDetails */
+
+/* transferOwnership */
+
+/* renounceOwnership */
+
 });

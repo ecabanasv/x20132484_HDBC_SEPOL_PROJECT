@@ -79,7 +79,7 @@ contract BikeContract {
     return _bikes;
   }
 
-    function showBikeDetails(uint _bikeID) public view returns (string memory, string memory, string memory) {
+  function showBikeDetails(uint _bikeID) public view returns (string memory, string memory, string memory) {
     return (bikes[_bikeID].make, bikes[_bikeID].model, bikes[_bikeID].frame);
   }
 
@@ -97,10 +97,6 @@ contract BikeContract {
     emit OwnerUpdated(_ownerID, _name, _email);
   }
 
-  function showOwnerDetails(uint _ownerID) public view returns (string memory, string memory) {
-    return (owner[_ownerID].name, owner[_ownerID].email);
-  }
-
   function showListOwnerDetails() public view returns (ownerDetails[] memory) {
     ownerDetails[] memory _owner = new ownerDetails[](ownerCounter);
     for (uint i = 0; i < ownerCounter; i++) {
@@ -108,6 +104,11 @@ contract BikeContract {
     }
     return _owner;
   }
+
+  function showOwnerDetails(uint _ownerID) public view returns (string memory, string memory) {
+    return (owner[_ownerID].name, owner[_ownerID].email);
+  }
+
     /* Other functions */
 
   function addDetails(uint _id, string memory _details) public {
