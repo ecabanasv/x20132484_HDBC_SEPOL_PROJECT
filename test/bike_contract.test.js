@@ -7,11 +7,6 @@ const truffleAssert = require('truffle-assertions');
  * See docs: https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript
  */
 contract("BikeContract", function (accounts) {
-  it("should assert true", async function () {
-    await BikeContract.deployed();
-    return assert.isTrue(true);
-  });
-
   /* newBike ("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com") */
   describe("@ Bike registering", () => {
     it("newBike: Can register bike and owner details", async () => {
