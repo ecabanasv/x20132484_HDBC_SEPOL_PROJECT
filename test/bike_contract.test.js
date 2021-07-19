@@ -32,50 +32,50 @@ contract("BikeContract", function (accounts) {
         return ev.name == name && ev.email == email
       })
     });
-    describe("@ Bike and owner listing", () => {
-      /* showListBikeDetails */
-  
-      it("showListBikeDetails: Can show the list of bikes registered", async () => {});
-  
-      /* showBikeDetails */
-  
-      it("showBikeDetails: Can show a specific bike registered", async () => {});
-    });
-  
-    describe("@ Owner functions", () => {
-      /* _newOwner */
-  
-      it("_newOwner: Can register new owner", async () => {});
-  
-      /* updateOwner */
-  
-      it("updateOwner: Can update a specific registered owner", async () => {});
-  
-      /* showListOwnerDetails */
-  
-      it("showListOwnerDetails: Can show a specific owners registered", async () => {});
-  
-      /* showListOwnerDetails */
-  
-      it("showListOwnerDetails: Can show the list of owners registered", async () => {});
-  
-      /* showOwnerDetails */
-  
-      it("showOwnerDetails: Can show a specific owner registered", async () => {});
-    });
-  
-    describe("@ Add details, transferOwnership and renounceOwnership functions", () => {
-      /* addDetails */
-  
-      it("addDetails: Can update bike details", async () => {});
-  
-      /* transferOwnership */
-  
-      it("transferOwnership: Can transfer ownership to future owner", async () => {});
-  
-      /* renounceOwnership */
-  
-      it("renounceOwnership: User can renounce its bike ownership", async () => {});
-    });
+  });
+  describe("@ Bike and owner listing", () => {
+    /* showListBikeDetails */
+
+    it("showListBikeDetails: Can show the list of bikes registered", async () => {});
+
+    /* showBikeDetails */
+
+    it("showBikeDetails: Can show a specific bike registered", async () => {});
+  });
+
+  describe("@ Owner functions", () => {
+    /* _newOwner */
+
+    it("_newOwner: Can register new owner", async () => {});
+
+    /* updateOwner */
+
+    it("updateOwner: Can update a specific registered owner", async () => {});
+
+    /* showListOwnerDetails */
+
+    it("showListOwnerDetails: Can show a specific owners registered", async () => {});
+
+    /* showListOwnerDetails */
+
+    it("showListOwnerDetails: Can show the list of owners registered", async () => {});
+
+    /* showOwnerDetails */
+
+    it("showOwnerDetails: Can show a specific owner registered", async () => {});
+  });
+
+  describe("@ Add details, transferOwnership and renounceOwnership functions", () => {
+    /* addDetails */
+
+    it("addDetails: Can update bike details", async () => {});
+
+    /* transferOwnership */
+
+    it("transferOwnership: Can transfer ownership to future owner", async () => {});
+
+    /* renounceOwnership */
+
+    it("renounceOwnership: User can renounce its bike ownership", async () => {});
   });
 });
