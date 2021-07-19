@@ -79,8 +79,8 @@ contract BikeContract {
     return _bikes;
   }
 
-  function showBikeDetails(uint _bikeID) public view returns (string memory, string memory, string memory) {
-    return (bikes[_bikeID].make, bikes[_bikeID].model, bikes[_bikeID].frame);
+  function showBikeDetails(uint _bikeID) public view returns (string memory, string memory, string memory, string memory) {
+    return (bikes[_bikeID].make, bikes[_bikeID].model, bikes[_bikeID].frame, bikes[_bikeID].details);
   }
 
   /* Owner functions */
