@@ -71,8 +71,9 @@ contract("BikeContract", function (accounts) {
       const name = "Rafael";
       const email = "rafael@gmail.com";
       const instance = await BikeContract.deployed();
+      //Update owner 0 to Rafael, rafael@gmail.com
       const owner = await instance.updateOwner(0, "Rafael", "rafael@gmail.com", {from:accounts[0]});
-      // test OwnerUpdated event
+      //Test OwnerUpdated event
       truffleAssert.eventEmitted(owner, 'OwnerUpdated', (ev) => {
         return ev.ownerID == 0 && ev.name == name && ev.email == email;
       })
@@ -112,7 +113,9 @@ contract("BikeContract", function (accounts) {
     /* addDetails */
     it("addDetails: Can update bike details", async () => {
     const instance = await BikeContract.deployed();
+    //Update details Bike 2: Hola
     await instance.addDetails(2, "Hola");
+    //Get Bike 2 details
     const resultBike = await instance.showBikeDetails(2);
     assert.equal(resultBike[3], "Hola");
   });
