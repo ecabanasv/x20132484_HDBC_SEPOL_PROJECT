@@ -3,9 +3,10 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const mongoose = require("mongoose");
 
-require("dotenv").config()
+const mongoose = require("mongoose");
+require("dotenv").config();
+
 mongoose
 .connect(
     process.env.MONGODB_CONNECTION_STRING,
@@ -20,8 +21,6 @@ mongoose
 var indexRouter = require("./routes/index");
 
 var app = express();
-
-// mongodb+srv://admin:x20132484@db.6xcjk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
