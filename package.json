@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
     "slint": "solhint \"contracts/**/*.sol\"",
     "coverage": "truffle run coverage"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bootstrap": "^5.0.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -15,6 +17,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.3",
     "morgan": "~1.9.1"
   },
