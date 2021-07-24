@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "slint": "solhint \"contracts/**/*.sol\"",
-    "coverage": "truffle run coverage"
+    "coverage": "npx truffle run coverage && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
+    "coveralls": "^3.1.1",
     "eth-gas-reporter": "^0.2.22",
     "ganache-cli": "^6.12.2",
     "mocha": "^8.1.2",
