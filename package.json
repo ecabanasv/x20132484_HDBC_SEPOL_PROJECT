@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "slint": "solhint \"contracts/**/*.sol\"",
-    "coverage": "npx truffle run coverage && cat coverage/lcov.info | coveralls"
+    "coverage": "npx truffle run coverage && cat coverage/lcov.info | coveralls",
+    "test": "truffle test"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
