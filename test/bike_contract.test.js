@@ -39,13 +39,13 @@ contract("BikeContract", function (accounts) {
       const bike4 = await instance.newBike("Adidas", "2004", "345345", "-", "Luis", "luis@gmail.com", {from:accounts[0]});
       const bikeList = await instance.showListBikeDetails();
       //Bike 1: Orbea
-      assert.equal(bikeList[1][1], "Orbea");
+      assert.equal(bikeList[1][2], "Orbea");
       //Bike 2: 2016
-      assert.equal(bikeList[2][2], "2016");
+      assert.equal(bikeList[2][3], "2016");
       //Bike 3: 312456
-      assert.equal(bikeList[3][3], "312456");
+      assert.equal(bikeList[3][4], "312456");
       //Bike 4: -
-      assert.equal(bikeList[4][4], "-");
+      assert.equal(bikeList[4][5], "-");
     });
     /* showBikeDetails */
 
@@ -54,13 +54,13 @@ contract("BikeContract", function (accounts) {
       //Get bike 1 result
       const result = await instance.showBikeDetails(0);
       //Bike 1: Orbea
-      assert.equal(result[0], "Orbea");
+      assert.equal(result[1], "Orbea");
       //Bike 1: 2019
-      assert.equal(result[1], "2019");
+      assert.equal(result[2], "2019");
       //Bike 1: 123123
-      assert.equal(result[2], "123123");
+      assert.equal(result[3], "123123");
       //Bike 1: -
-      assert.equal(result[3], "-");
+      assert.equal(result[4], "-");
     });
   });
 
@@ -117,7 +117,7 @@ contract("BikeContract", function (accounts) {
     await instance.addDetails(2, "Hola");
     //Get Bike 2 details
     const resultBike = await instance.showBikeDetails(2);
-    assert.equal(resultBike[3], "Hola");
+    assert.equal(resultBike[4], "Hola");
   });
   
     /* transferOwnership */
@@ -127,7 +127,7 @@ contract("BikeContract", function (accounts) {
       await instance.transferOwnership(1, "0x1A771540337888ADBb230f310ca442bA8B7E01aE", {from:accounts[0]});
       const bikeList = await instance.showListBikeDetails();
       //Check Bike 1 address
-      assert.equal(bikeList[1][5], "0x1A771540337888ADBb230f310ca442bA8B7E01aE");
+      assert.equal(bikeList[1][6], "0x1A771540337888ADBb230f310ca442bA8B7E01aE");
     });
   
     /* renounceOwnership */
@@ -137,7 +137,7 @@ contract("BikeContract", function (accounts) {
       await instance.renounceOwnership(1, {from:accounts[0]});
       const bikeList = await instance.showListBikeDetails();
       //Check Bike 1 address
-      assert.equal(bikeList[1][5], "0x0000000000000000000000000000000000000000");
+      assert.equal(bikeList[1][6], "0x0000000000000000000000000000000000000000");
     });
   });
 });

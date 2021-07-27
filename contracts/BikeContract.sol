@@ -9,6 +9,7 @@ contract BikeContract {
 
     struct bikeDetails {
         uint256 bikeID;
+        uint256 regDate;
         string make;
         string model;
         string frame;
@@ -28,6 +29,7 @@ contract BikeContract {
 
     event BikeCreated(
         uint256 bikeID,
+        uint256 regDate,
         string make,
         string model,
         string frame,
@@ -77,6 +79,7 @@ contract BikeContract {
     ) public emptyBikeString(_make, _model, _frame) {
         bikes[bikeCounter] = bikeDetails(
             bikeCounter,
+            block.timestamp,
             _make,
             _model,
             _frame,
@@ -84,7 +87,7 @@ contract BikeContract {
             msg.sender
         );
         bikeCounter++;
-        emit BikeCreated(bikeCounter, _make, _model, _frame, _details);
+        emit BikeCreated(bikeCounter, block.timestamp, _make, _model, _frame, _details);
         _newOwner(_name, _email);
     }
 
@@ -100,6 +103,7 @@ contract BikeContract {
         public
         view
         returns (
+            uint256,
             string memory,
             string memory,
             string memory,
@@ -107,6 +111,7 @@ contract BikeContract {
         )
     {
         return (
+            bikes[_bikeID].regDate,
             bikes[_bikeID].make,
             bikes[_bikeID].model,
             bikes[_bikeID].frame,
