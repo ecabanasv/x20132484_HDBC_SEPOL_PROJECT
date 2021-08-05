@@ -67,6 +67,13 @@ contract BikeContract {
         _;
     }
 
+    // modifier functions that is executed before rest of code
+    // it validates field (details) is not empty
+    modifier emptyDetailsString(string memory _details) {
+        require(bytes(_details).length > 0, "(Details): Must not be empty.");
+        _;
+    }
+
     /* Bike functions */
 
     function newBike(
@@ -162,7 +169,7 @@ contract BikeContract {
 
     /* Other functions */
 
-    function addDetails(uint256 _id, string memory _details) public {
+    function addDetails(uint256 _id, string memory _details) public emptyDetailsString(_details) {
         bikes[_id].details = _details;
         emit detailsAdded(_id, _details);
     }

@@ -1,6 +1,6 @@
-const BikeContract = artifacts.require('BikeContract');
-const { assert } = require('chai');
-const truffleAssert = require('truffle-assertions');
+const BikeContract = artifacts.require("BikeContract");
+const { assert } = require("chai");
+const truffleAssert = require("truffle-assertions");
 
 /*
  * uncomment accounts to access the test accounts made available by the
@@ -18,25 +18,70 @@ contract("BikeContract", function (accounts) {
       const name = "Enrique";
       const email = "ecvoracle@gmail.com";
       const instance = await BikeContract.deployed();
-      const bike = await instance.newBike("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com", {from:accounts[0]});
+      const bike = await instance.newBike(
+        "Orbea",
+        "2019",
+        "123123",
+        "-",
+        "Enrique",
+        "ecvoracle@gmail.com",
+        { from: accounts[0] }
+      );
       // test BikeCreated event
-      truffleAssert.eventEmitted(bike, 'BikeCreated', (ev) => {
-        return ev.make == make && ev.model == model && ev.frame == frame && ev.details == details;
-      })
+      truffleAssert.eventEmitted(bike, "BikeCreated", (ev) => {
+        return (
+          ev.make == make &&
+          ev.model == model &&
+          ev.frame == frame &&
+          ev.details == details
+        );
+      });
       // test OwnerAdded event
-      truffleAssert.eventEmitted(bike, 'OwnerAdded', (ev) => {
+      truffleAssert.eventEmitted(bike, "OwnerAdded", (ev) => {
         return ev.name == name && ev.email == email;
-      })
+      });
     });
   });
   describe("@ Bike and owner listing", () => {
     /* showListBikeDetails */
     it("showListBikeDetails: Can show the list of bikes registered", async () => {
       const instance = await BikeContract.deployed();
-      const bike1 = await instance.newBike("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com", {from:accounts[0]});
-      const bike2 = await instance.newBike("Carrefour", "2016", "892342", "-", "Juan", "juan@gmail.com", {from:accounts[0]});
-      const bike3 = await instance.newBike("Nike", "2010", "312456", "-", "Pepe", "pepe@gmail.com", {from:accounts[0]});
-      const bike4 = await instance.newBike("Adidas", "2004", "345345", "-", "Luis", "luis@gmail.com", {from:accounts[0]});
+      const bike1 = await instance.newBike(
+        "Orbea",
+        "2019",
+        "123123",
+        "-",
+        "Enrique",
+        "ecvoracle@gmail.com",
+        { from: accounts[0] }
+      );
+      const bike2 = await instance.newBike(
+        "Carrefour",
+        "2016",
+        "892342",
+        "-",
+        "Juan",
+        "juan@gmail.com",
+        { from: accounts[0] }
+      );
+      const bike3 = await instance.newBike(
+        "Nike",
+        "2010",
+        "312456",
+        "-",
+        "Pepe",
+        "pepe@gmail.com",
+        { from: accounts[0] }
+      );
+      const bike4 = await instance.newBike(
+        "Adidas",
+        "2004",
+        "345345",
+        "-",
+        "Luis",
+        "luis@gmail.com",
+        { from: accounts[0] }
+      );
       const bikeList = await instance.showListBikeDetails();
       //Bike 1: Orbea
       assert.equal(bikeList[1][2], "Orbea");
@@ -64,7 +109,6 @@ contract("BikeContract", function (accounts) {
     });
   });
 
-
   describe("@ Owner functions", () => {
     /* updateOwner */
     it("updateOwner: Can update a specific registered owner", async () => {
@@ -72,15 +116,20 @@ contract("BikeContract", function (accounts) {
       const email = "rafael@gmail.com";
       const instance = await BikeContract.deployed();
       //Update owner 0 to Rafael, rafael@gmail.com
-      const owner = await instance.updateOwner(0, "Rafael", "rafael@gmail.com", {from:accounts[0]});
+      const owner = await instance.updateOwner(
+        0,
+        "Rafael",
+        "rafael@gmail.com",
+        { from: accounts[0] }
+      );
       //Test OwnerUpdated event
-      truffleAssert.eventEmitted(owner, 'OwnerUpdated', (ev) => {
+      truffleAssert.eventEmitted(owner, "OwnerUpdated", (ev) => {
         return ev.ownerID == 0 && ev.name == name && ev.email == email;
-      })
+      });
     });
-  
+
     /* showListOwnerDetails */
-  
+
     it("showListOwnerDetails: Can show the list of owners registered", async () => {
       const instance = await BikeContract.deployed();
       const ownerList = await instance.showListOwnerDetails();
@@ -93,9 +142,9 @@ contract("BikeContract", function (accounts) {
       //Owner 4
       assert.equal(ownerList[4][2], "luis@gmail.com");
     });
-  
+
     /* showOwnerDetails */
-  
+
     it("showOwnerDetails: Can show a specific owners registered", async () => {
       const instance = await BikeContract.deployed();
       //Show owner (0)
@@ -105,39 +154,47 @@ contract("BikeContract", function (accounts) {
       //Owner 1: rafael@gmail.com
       assert.equal(result[1], "rafael@gmail.com");
     });
-  
+  });
 
-    });
-  
   describe("@ Add details, transferOwnership and renounceOwnership functions", () => {
     /* addDetails */
     it("addDetails: Can update bike details", async () => {
-    const instance = await BikeContract.deployed();
-    //Update details Bike 2: Hola
-    await instance.addDetails(2, "Hola");
-    //Get Bike 2 details
-    const resultBike = await instance.showBikeDetails(2);
-    assert.equal(resultBike[4], "Hola");
-  });
-  
+      const instance = await BikeContract.deployed();
+      //Update details Bike 2: Hola
+      await instance.addDetails(2, "Hola");
+      //Get Bike 2 details
+      const resultBike = await instance.showBikeDetails(2);
+      assert.equal(resultBike[4], "Hola");
+    });
+
     /* transferOwnership */
-  
+
     it("transferOwnership: Can transfer ownership to future owner", async () => {
       const instance = await BikeContract.deployed();
-      await instance.transferOwnership(1, "0x1A771540337888ADBb230f310ca442bA8B7E01aE", {from:accounts[0]});
+      await instance.transferOwnership(
+        1,
+        "0x1A771540337888ADBb230f310ca442bA8B7E01aE",
+        { from: accounts[0] }
+      );
       const bikeList = await instance.showListBikeDetails();
       //Check Bike 1 address
-      assert.equal(bikeList[1][6], "0x1A771540337888ADBb230f310ca442bA8B7E01aE");
+      assert.equal(
+        bikeList[1][6],
+        "0x1A771540337888ADBb230f310ca442bA8B7E01aE"
+      );
     });
-  
+
     /* renounceOwnership */
-  
+
     it("renounceOwnership: User can renounce its bike ownership", async () => {
       const instance = await BikeContract.deployed();
-      await instance.renounceOwnership(1, {from:accounts[0]});
+      await instance.renounceOwnership(1, { from: accounts[0] });
       const bikeList = await instance.showListBikeDetails();
       //Check Bike 1 address
-      assert.equal(bikeList[1][6], "0x0000000000000000000000000000000000000000");
+      assert.equal(
+        bikeList[1][6],
+        "0x0000000000000000000000000000000000000000"
+      );
     });
   });
 });
