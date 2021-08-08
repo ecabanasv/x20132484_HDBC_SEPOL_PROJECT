@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include static/header %>
+</head>
+
+<body>
+    <% include static/menu %>
+        <div class="container-fluid bg-3 text-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Signup</li>
+                </ol>
+            </nav>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                <h2 class="hTitle">
+                  <%= page %>
+                </h2>
+                <% if (error!=null) { %>
+                    <div class="error"><%= error %></div>
+                <% } %>
+                </div>
+              </div>
+              <br>
+            <div class="row">
+                <form action="/signup" method="post">
+                    <div class="col-md-3 offset-md-5">
+                        <div class="form-group col-md-8">
+                            <label class="lblInput" for="inputUsername">Username</label>
+                            <input type="text" class="inputField form-control" name="inputUsername" id="inputUsername"
+                                placeholder="Username" minlength="4" maxlength="15" required>
+                            <br>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label class="lblInput" for="inputPassword">Password</label>
+                            <input type="password" class="inputField form-control" name="inputPassword" id="inputPassword"
+                                placeholder="Password" minlength="4" maxlength="15" required>
+                            <input type="hidden" name="currentMetaAcc" id="currentMetaAcc">
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-secondary btn-sm">Signup</button>
+                </form>
+            </div>
+        </div>
+        <% include static/footer %>
+</body>
+<% include static/scripts %>
+    <script>
+        var ethKey = null;
+        (async function () {
+            ethKey = await window.ethereum.request({ method: 'eth_requestAccounts' })
+            let metaAcc = (await document.getElementById("currentMetaAcc"))
+            metaAcc.value = ethKey[0]
+        })()
+    </script>
+
+</html>

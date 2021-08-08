@@ -3,41 +3,54 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+// Favicon
+var favicon = require("serve-favicon");
 
+// Mongoose
 const mongoose = require("mongoose");
+
+// Dotenv
 require("dotenv").config();
 
-mongoose
-.connect(
-    process.env.MONGODB_ATLAS_URI,
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        }
-)
-.then(() => console.log("MongoDB has been connected"))
-.catch((err) => console.log(err));
-
+// Routes
 var indexRouter = require("./routes/index");
+var userRouter = require("./routes/user");
 
 var app = express();
 
-// view engine setup
+// View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// Favicon path
+app.use(favicon(path.join(__dirname, "public/images", "favicon.ico")));
+
+// Custom Bootstrap path
+app.use(
+  "/cssbs",
+  express.static(__dirname + "/node_modules/bootstrap/dist/css")
+);
+app.use("/jsbs", express.static(__dirname + "/node_modules/bootstrap/dist/js"));
+
+// App use
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(
-  "/cssb",
-  express.static(__dirname + "/node_modules/bootstrap/dist/css")
-);
-app.use("/jsb", express.static(__dirname + "/node_modules/bootstrap/dist/js"));
+
+// DB Connection
+mongoose
+  .connect(process.env.MONGODB_ATLAS_URI, {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB has been connected"))
+  .catch((err) => console.log(err));
 
 app.use("/", indexRouter);
+app.use("/", userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

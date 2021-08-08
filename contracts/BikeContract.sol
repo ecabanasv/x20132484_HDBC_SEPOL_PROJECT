@@ -7,6 +7,8 @@ contract BikeContract {
     uint256 private ownerCounter = 0;
     address private emptyAddress = 0x0000000000000000000000000000000000000000;
 
+    // struct bikeDetails 
+
     struct bikeDetails {
         uint256 bikeID;
         uint256 regDate;
@@ -16,6 +18,8 @@ contract BikeContract {
         string details;
         address user_address;
     }
+
+    // struck ownerDetails
 
     struct ownerDetails {
         uint256 ownerID;
@@ -35,6 +39,8 @@ contract BikeContract {
         string frame,
         string details
     );
+
+    // events
 
     event OwnerAdded(uint256 ownerID, string name, string email);
 
@@ -94,7 +100,14 @@ contract BikeContract {
             msg.sender
         );
         bikeCounter++;
-        emit BikeCreated(bikeCounter, block.timestamp, _make, _model, _frame, _details);
+        emit BikeCreated(
+            bikeCounter,
+            block.timestamp,
+            _make,
+            _model,
+            _frame,
+            _details
+        );
         _newOwner(_name, _email);
     }
 
@@ -147,17 +160,6 @@ contract BikeContract {
         emit OwnerUpdated(_ownerID, _name, _email);
     }
 
-    function showListOwnerDetails()
-        public
-        view
-        returns (ownerDetails[] memory)
-    {
-        ownerDetails[] memory _owner = new ownerDetails[](ownerCounter);
-        for (uint256 i = 0; i < ownerCounter; i++) {
-            _owner[i] = owner[i];
-        }
-        return _owner;
-    }
 
     function showOwnerDetails(uint256 _ownerID)
         public
@@ -169,7 +171,10 @@ contract BikeContract {
 
     /* Other functions */
 
-    function addDetails(uint256 _id, string memory _details) public emptyDetailsString(_details) {
+    function addDetails(uint256 _id, string memory _details)
+        public
+        emptyDetailsString(_details)
+    {
         bikes[_id].details = _details;
         emit detailsAdded(_id, _details);
     }

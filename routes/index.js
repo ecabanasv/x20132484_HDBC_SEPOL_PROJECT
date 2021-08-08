@@ -1,37 +1,28 @@
-var express = require('express');
-var router = express.Router();
+let express = require("express");
+let router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', {page:'Home', menuId:'home'});
-});
+// Bike WebApp Controller
+var bikeapp_controller = require("../controllers/bikeAppController");
 
-router.get('/register', function(req, res, next) {
-  res.render('registerBike', {page:'Register Bike', menuId:'register'});
-});
+// Home
+router.get("/", bikeapp_controller.index);
 
-router.get('/showdetails', function(req, res, next) {
-  res.render('showDetails', {page:'Show details', menuId:'showdetails'});
-});
+// Register bike
+router.get("/registerBike", bikeapp_controller.regiter_bike_get);
+router.post("/registerBike", bikeapp_controller.regiter_bike_post);
 
-router.get('/adddetails', function(req, res, next) {
-  res.render('addDetails', {page:'Add details', menuId:'adddetails'});
-});
+// Management
+router.get("/management", bikeapp_controller.management_get);
+// router.get("/showDetails", bikeapp_controller.management_get);
+// router.get("/addDetails", bikeapp_controller.management_get);
+// router.get("/transferOwnership", bikeapp_controller.management_get);
+// router.get("/renounceOwnership", bikeapp_controller.management_get);
 
-router.get('/transferownership', function(req, res, next) {
-  res.render('transferOwnership', {page:'Transfer Ownership', menuId:'transferownership'});
-});
+// FAQ
+router.get("/faq", bikeapp_controller.faq_get);
 
-router.get('/renounceownership', function(req, res, next) {
-  res.render('renounceOwnership', {page:'Renounce Ownership', menuId:'renounceownership'});
-});
-
-router.get('/faq', function(req, res, next) {
-  res.render('faq', {page:'FAQ', menuId:'faq'});
-});
-
-router.get('/contact', function(req, res, next) {
-  res.render('contact', {page:'Contact', menuId:'contact'});
-});
+// Contact
+router.get("/contact", bikeapp_controller.contact_get);
+router.post("/contact", bikeapp_controller.contact_post);
 
 module.exports = router;

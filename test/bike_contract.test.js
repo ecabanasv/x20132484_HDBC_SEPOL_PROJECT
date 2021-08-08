@@ -10,7 +10,7 @@ const truffleAssert = require("truffle-assertions");
 contract("BikeContract", function (accounts) {
   /* newBike ("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com") */
   describe("@ Bike registering", () => {
-    it("newBike: Can register bike and owner details", async () => {
+    it("it should register bike and owner details", async () => {
       const make = "Orbea";
       const model = "2019";
       const frame = "123123";
@@ -44,7 +44,7 @@ contract("BikeContract", function (accounts) {
   });
   describe("@ Bike and owner listing", () => {
     /* showListBikeDetails */
-    it("showListBikeDetails: Can show the list of bikes registered", async () => {
+    it("it should show the list of bikes registered", async () => {
       const instance = await BikeContract.deployed();
       const bike1 = await instance.newBike(
         "Orbea",
@@ -94,7 +94,7 @@ contract("BikeContract", function (accounts) {
     });
     /* showBikeDetails */
 
-    it("showBikeDetails: Can show a specific bike registered", async () => {
+    it("it should show a specific bike registered", async () => {
       const instance = await BikeContract.deployed();
       //Get bike 1 result
       const result = await instance.showBikeDetails(0);
@@ -111,7 +111,7 @@ contract("BikeContract", function (accounts) {
 
   describe("@ Owner functions", () => {
     /* updateOwner */
-    it("updateOwner: Can update a specific registered owner", async () => {
+    it("it should update a specific registered owner", async () => {
       const name = "Rafael";
       const email = "rafael@gmail.com";
       const instance = await BikeContract.deployed();
@@ -128,24 +128,9 @@ contract("BikeContract", function (accounts) {
       });
     });
 
-    /* showListOwnerDetails */
-
-    it("showListOwnerDetails: Can show the list of owners registered", async () => {
-      const instance = await BikeContract.deployed();
-      const ownerList = await instance.showListOwnerDetails();
-      //Owner 1
-      assert.equal(ownerList[1][1], "Enrique");
-      //Owner 2
-      assert.equal(ownerList[2][2], "juan@gmail.com");
-      //Owner 3
-      assert.equal(ownerList[3][1], "Pepe");
-      //Owner 4
-      assert.equal(ownerList[4][2], "luis@gmail.com");
-    });
-
     /* showOwnerDetails */
 
-    it("showOwnerDetails: Can show a specific owners registered", async () => {
+    it("it should show a specific owner registered", async () => {
       const instance = await BikeContract.deployed();
       //Show owner (0)
       const result = await instance.showOwnerDetails(0);
@@ -158,7 +143,7 @@ contract("BikeContract", function (accounts) {
 
   describe("@ Add details, transferOwnership and renounceOwnership functions", () => {
     /* addDetails */
-    it("addDetails: Can update bike details", async () => {
+    it("it should update an specific bike details", async () => {
       const instance = await BikeContract.deployed();
       //Update details Bike 2: Hola
       await instance.addDetails(2, "Hola");
@@ -169,7 +154,7 @@ contract("BikeContract", function (accounts) {
 
     /* transferOwnership */
 
-    it("transferOwnership: Can transfer ownership to future owner", async () => {
+    it("it should transfer ownership to future owner", async () => {
       const instance = await BikeContract.deployed();
       await instance.transferOwnership(
         1,
@@ -186,7 +171,7 @@ contract("BikeContract", function (accounts) {
 
     /* renounceOwnership */
 
-    it("renounceOwnership: User can renounce its bike ownership", async () => {
+    it("it should renounce its bike ownership", async () => {
       const instance = await BikeContract.deployed();
       await instance.renounceOwnership(1, { from: accounts[0] });
       const bikeList = await instance.showListBikeDetails();

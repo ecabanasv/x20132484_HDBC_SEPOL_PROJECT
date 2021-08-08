@@ -10,6 +10,8 @@
     "test": "truffle test"
   },
   "dependencies": {
+    "@truffle/contract": "^4.3.29",
+    "@truffle/hdwallet-provider": "^1.4.3",
     "bcrypt": "^5.0.1",
     "bootstrap": "^5.0.2",
     "cookie-parser": "~1.4.4",
@@ -19,12 +21,14 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.13.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "serve-favicon": "^2.5.0",
+    "web3": "^1.4.0"
   },
   "devDependencies": {
     "chai": "^4.3.4",
-    "coveralls": "^3.1.1",
     "eth-gas-reporter": "^0.2.22",
     "ganache-cli": "^6.12.2",
     "mocha": "^8.1.2",
