@@ -8,13 +8,12 @@ const truffleAssert = require("truffle-assertions");
  * See docs: https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript
  */
 contract("BikeContract", function (accounts) {
-  /* newBike ("Orbea", "2019", "123123", "-", "Enrique", "ecvoracle@gmail.com") */
+  /* newBike ("Orbea", "2019", "123123", "Enrique", "ecvoracle@gmail.com") */
   describe("@ Bike registering", () => {
     it("it should register bike and owner details", async () => {
       const make = "Orbea";
       const model = "2019";
       const frame = "123123";
-      const details = "-";
       const name = "Enrique";
       const email = "ecvoracle@gmail.com";
       const instance = await BikeContract.deployed();
@@ -22,7 +21,6 @@ contract("BikeContract", function (accounts) {
         "Orbea",
         "2019",
         "123123",
-        "-",
         "Enrique",
         "ecvoracle@gmail.com",
         { from: accounts[0] }
@@ -32,8 +30,7 @@ contract("BikeContract", function (accounts) {
         return (
           ev.make == make &&
           ev.model == model &&
-          ev.frame == frame &&
-          ev.details == details
+          ev.frame == frame
         );
       });
       // test OwnerAdded event
@@ -50,7 +47,6 @@ contract("BikeContract", function (accounts) {
         "Orbea",
         "2019",
         "123123",
-        "-",
         "Enrique",
         "ecvoracle@gmail.com",
         { from: accounts[0] }
@@ -59,7 +55,6 @@ contract("BikeContract", function (accounts) {
         "Carrefour",
         "2016",
         "892342",
-        "-",
         "Juan",
         "juan@gmail.com",
         { from: accounts[0] }
@@ -68,7 +63,6 @@ contract("BikeContract", function (accounts) {
         "Nike",
         "2010",
         "312456",
-        "-",
         "Pepe",
         "pepe@gmail.com",
         { from: accounts[0] }
@@ -77,7 +71,6 @@ contract("BikeContract", function (accounts) {
         "Adidas",
         "2004",
         "345345",
-        "-",
         "Luis",
         "luis@gmail.com",
         { from: accounts[0] }
@@ -90,7 +83,7 @@ contract("BikeContract", function (accounts) {
       //Bike 3: 312456
       assert.equal(bikeList[3][4], "312456");
       //Bike 4: -
-      assert.equal(bikeList[4][5], "-");
+      assert.equal(bikeList[4][2], "Adidas");
     });
     /* showBikeDetails */
 
@@ -104,8 +97,6 @@ contract("BikeContract", function (accounts) {
       assert.equal(result[2], "2019");
       //Bike 1: 123123
       assert.equal(result[3], "123123");
-      //Bike 1: -
-      assert.equal(result[4], "-");
     });
   });
 
@@ -143,13 +134,17 @@ contract("BikeContract", function (accounts) {
 
   describe("@ Add details, transferOwnership and renounceOwnership functions", () => {
     /* addDetails */
-    it("it should update an specific bike details", async () => {
+    it("it should add details for an specific bike", async () => {
+      const bike_id = 1;
+      const detail_string = "Replaced brakes";
       const instance = await BikeContract.deployed();
-      //Update details Bike 2: Hola
-      await instance.addDetails(2, "Hola");
-      //Get Bike 2 details
-      const resultBike = await instance.showBikeDetails(2);
-      assert.equal(resultBike[4], "Hola");
+      const detail = await instance.addDetails(bike_id, detail_string, {
+        from: accounts[0],
+      });
+      // test detailsAdded event
+      truffleAssert.eventEmitted(detail, "detailsAdded", (ev) => {
+        return ev.id == bike_id && ev.details == detail_string;
+      });
     });
 
     /* transferOwnership */
@@ -164,7 +159,7 @@ contract("BikeContract", function (accounts) {
       const bikeList = await instance.showListBikeDetails();
       //Check Bike 1 address
       assert.equal(
-        bikeList[1][6],
+        bikeList[1][5],
         "0x1A771540337888ADBb230f310ca442bA8B7E01aE"
       );
     });
@@ -177,7 +172,7 @@ contract("BikeContract", function (accounts) {
       const bikeList = await instance.showListBikeDetails();
       //Check Bike 1 address
       assert.equal(
-        bikeList[1][6],
+        bikeList[1][5],
         "0x0000000000000000000000000000000000000000"
       );
     });

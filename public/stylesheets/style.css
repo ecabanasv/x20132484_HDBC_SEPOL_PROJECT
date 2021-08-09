@@ -1,21 +1,59 @@
 /* General */
 
-.body {
+body {
+  background-color: #e0daba;
 }
 
-.footer {
+/* breadcrumb */
+.breadcrumb {
+  margin-top: 5px;
+}
+
+.breadcrumb a {
+  color: black;
+}
+
+.breadcrumb > .active {
+  font-weight: bold;
+  color: green;
+}
+
+.h2Title {
+  font-weight: bold;
+  text-align: center;
+}
+
+.h3Title {
+  font-weight: bold;
+}
+
+.h5Title {
+  font-weight: bold;
+}
+
+/* Form style */
+.input-style {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.form-group{
+  margin-bottom: 8px;
+}
+
+.lblInput {
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.btnAddBike {
+  text-align: center;
 }
 
 /* Index */
 
 .bgBike {
   padding: 0;
-}
-
-.imgIndex {
-}
-
-.pIndex {
 }
 
 /* Register bike */

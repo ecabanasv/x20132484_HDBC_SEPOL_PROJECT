@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include static/header %>
+</head>
+
+<body>
+    <% include static/menu %>
+        <div class="container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Register new bike</li>
+                </ol>
+            </nav>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <h3 class="h3Title">
+                        <%= page %>
+                    </h3>
+                </div>
+            </div>
+            <br>
+            <form action="/register-bike" method="post">
+                <div class="row justify-content-center">
+                    <div class="col col-lg-6">
+                        <h5 class="h5Title">Bike details</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col col-lg-3">
+                        <div class="form-group">
+                            <label class="lblInput" for="inputMake">Make:</label>
+                            <input type="text" class="input-style form-control" name="inputMake" id="inputMake"
+                                placeholder="Make..." required>
+                        </div>
+                    </div>
+                    <div class="col col-lg-3">
+                        <div class="form-group">
+                            <label class="lblInput" for="inputModel">Model:</label>
+                            <input type="text" class="input-style form-control" name="inputModel" id="inputModel"
+                                placeholder="Model..." required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col col-lg-3">
+                        <div class="form-group">
+                            <label class="lblInput" for="inputFrame">Frame No.:</label>
+                            <input type="text" class="input-style form-control" name="inputFrame" id="inputFrame"
+                                placeholder="Frame No." required>
+                        </div>
+                    </div>
+                    <div class="col col-lg-3">
+                        <div class="form-group">
+                            <label class="lblInput" for="inputDetails">Bike details:</label>
+                            <textarea type="textbox" class="input-style form-control" name="inputDetails"
+                                id="inputDetails" placeholder="Details about the bike..." rows="2" minlength="10"
+                                maxlength="50" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col col-lg-6">
+                        <h5 class="h5Title">Owner details</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col col-lg-3">
+                        <div class="form-group">
+                            <label class="lblInput" for="inputName">Name:</label>
+                            <input type="text" class="input-style form-control" name="inputName" id="inputName"
+                                placeholder="Name..." required>
+                        </div>
+                    </div>
+                    <div class="col col-lg-3">
+                        <div class="form-group">
+                            <label class="lblInput" for="inputEmail">Email:</label>
+                            <input type="text" class="input-style form-control" name="inputEmail" id="inputEmail"
+                                placeholder="Email..." required>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="margin-top: 50px;">
+                    <button type="submit" class="btn btn-secondary">Send</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                </div>
+                <br>
+            </form>
+        </div>
+        <br>
+        <% include static/footer %>
+</body>
+<% include static/scripts %>
+    <script>
+        var ethKey = null;
+        (async function () {
+            ethKey = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        })()
+
+        window.ethereum.on('accountsChanged', function (accounts) {
+            window.location = "/logout";
+        })
+
+        window.ethereum.on('chainChanged', function (chainId) {
+            window.location = "/logout";
+        })
+    </script>
+
+
+</html>

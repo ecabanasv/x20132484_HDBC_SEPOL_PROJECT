@@ -5,9 +5,10 @@ pragma experimental ABIEncoderV2;
 contract BikeContract {
     uint256 private bikeCounter = 0;
     uint256 private ownerCounter = 0;
+    uint256 private detailsCounter = 0;
     address private emptyAddress = 0x0000000000000000000000000000000000000000;
 
-    // struct bikeDetails 
+    // struct bikeDetails
 
     struct bikeDetails {
         uint256 bikeID;
@@ -15,7 +16,6 @@ contract BikeContract {
         string make;
         string model;
         string frame;
-        string details;
         address user_address;
     }
 
@@ -27,17 +27,26 @@ contract BikeContract {
         string email;
     }
 
+    // struck listDetails
+
+    struct listDetails {
+        uint256 bikeID;
+        uint256 date;
+        string details;
+    }
+
     mapping(uint256 => bikeDetails) public bikes;
 
     mapping(uint256 => ownerDetails) public owner;
+
+    mapping(uint256 => listDetails) public details;
 
     event BikeCreated(
         uint256 bikeID,
         uint256 regDate,
         string make,
         string model,
-        string frame,
-        string details
+        string frame
     );
 
     // events
@@ -46,7 +55,7 @@ contract BikeContract {
 
     event OwnerUpdated(uint256 ownerID, string name, string email);
 
-    event detailsAdded(uint256 id, string details);
+    event detailsAdded(uint256 id, uint256 date, string details);
 
     event transferDone(uint256 ownerID, address user_address);
 
@@ -86,7 +95,6 @@ contract BikeContract {
         string memory _make,
         string memory _model,
         string memory _frame,
-        string memory _details,
         string memory _name,
         string memory _email
     ) public emptyBikeString(_make, _model, _frame) {
@@ -96,18 +104,10 @@ contract BikeContract {
             _make,
             _model,
             _frame,
-            _details,
             msg.sender
         );
         bikeCounter++;
-        emit BikeCreated(
-            bikeCounter,
-            block.timestamp,
-            _make,
-            _model,
-            _frame,
-            _details
-        );
+        emit BikeCreated(bikeCounter, block.timestamp, _make, _model, _frame);
         _newOwner(_name, _email);
     }
 
@@ -126,7 +126,6 @@ contract BikeContract {
             uint256,
             string memory,
             string memory,
-            string memory,
             string memory
         )
     {
@@ -134,8 +133,7 @@ contract BikeContract {
             bikes[_bikeID].regDate,
             bikes[_bikeID].make,
             bikes[_bikeID].model,
-            bikes[_bikeID].frame,
-            bikes[_bikeID].details
+            bikes[_bikeID].frame
         );
     }
 
@@ -160,7 +158,6 @@ contract BikeContract {
         emit OwnerUpdated(_ownerID, _name, _email);
     }
 
-
     function showOwnerDetails(uint256 _ownerID)
         public
         view
@@ -175,9 +172,19 @@ contract BikeContract {
         public
         emptyDetailsString(_details)
     {
-        bikes[_id].details = _details;
-        emit detailsAdded(_id, _details);
+        details[detailsCounter] = listDetails(_id, block.timestamp, _details);
+        detailsCounter++;
+        emit detailsAdded(_id, block.timestamp, _details);
     }
+
+    function showAllDetails() public view returns (listDetails[] memory) {
+        listDetails[] memory _details = new listDetails[](detailsCounter);
+        for (uint256 i = 0; i < detailsCounter; i++) {
+            _details[i] = details[i];
+        }
+        return _details;
+    }
+
 
     function transferOwnership(uint256 _id, address _newAddress) public {
         bikes[_id].user_address = _newAddress;

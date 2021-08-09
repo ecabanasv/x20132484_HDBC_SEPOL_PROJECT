@@ -8,28 +8,28 @@ exports.user_login_get = async function (req, res, next) {
   // Get token value if exist
   let token = req.cookies.token;
   // Get name from JWT token if exist
-  let userEmail = null;
+  let user_name = null;
   // If token exists render page with name value (login name)
   // If token doesn't exist render normal page
   if (token) {
-    userEmail = jwt.verify(token, "BikeSmartContract").email;
-    res.render("index", { page: "Home", menu_id: "home", email: userEmail });
+    user_name = jwt.verify(token, "BikeSmartContract").username;
+    res.render("index", { page: "Home", menu_id: "home", name: user_name });
   } else {
     return res.render("login", {
       page: "Login",
       menu_id: "login",
-      email: null,
+      name: null,
       error: null,
     });
   }
 };
 
 // Login (POST)
-exports.user_login_post = function (req, res, next) {
+exports.user_login_post = async function (req, res, next) {
   // Find email in MongoDB
   Users.findOne(
     {
-      username: req.body.inputEmail,
+      username: req.body.inputUsername,
     },
     function (err, user) {
       if (user === null || err) {
@@ -37,8 +37,8 @@ exports.user_login_post = function (req, res, next) {
         res.render("login", {
           page: "Login",
           menu_id: "login",
-          email: null,
-          error: "Email not found",
+          name: null,
+          error: "Username not found",
         });
         return;
       } else {
@@ -53,15 +53,15 @@ exports.user_login_post = function (req, res, next) {
           return res.render("login", {
             page: "Login",
             menu_id: "login",
-            email: null,
+            name: null,
             error: "Invalid password",
           });
         } else {
-          // Sign JWT token with ID, username and address for 7d days
+          // Sign JWT token with ID, user_name and address for 7d days
           let token = jwt.sign(
             {
               _id: user._id,
-              email: user.email,
+              username: user.username,
               address: user.address,
             },
             "BikeSmartContract",
@@ -77,33 +77,33 @@ exports.user_login_post = function (req, res, next) {
 };
 
 // Signup (GET)
-exports.user_signup_get = function (req, res, next) {
+exports.user_signup_get = async function (req, res, next) {
   // Get token value if exist
   let token = req.cookies.token;
   // Get name from JWT token if exist
-  let userEmail = null;
+  let user_name = null;
   // If token exists render page with name value (login name)
   // If token doesn't exist render normal page
   if (token) {
-    userEmail = jwt.verify(token, "BikeSmartContract").email;
-    res.render("index", { page: "Home", menu_id: "home", email: userEmail });
+    user_name = jwt.verify(token, "BikeSmartContract").username;
+    res.render("index", { page: "Home", menu_id: "home", name: user_name });
   } else {
     return res.render("signup", {
       page: "Sign-up",
       menu_id: "signup",
-      email: null,
+      name: null,
       error: null,
     });
   }
 };
 
 // Signup (POST)
-exports.user_signup_post = function (req, res, next) {
-  // Hash the inputPassword and then saved in MongoDB with rest of user fields (username & address)
+exports.user_signup_post = async function (req, res, next) {
+  // Hash the inputPassword and then saved in MongoDB with rest of user fields (user_name & address)
   bcrypt.hash(req.body.inputPassword, 10).then((hash) => {
     const user = new Users({
-      email: re.body.email,
-      has_password: hash,
+      username: req.body.inputUsername,
+      hash_password: hash,
       address: req.body.currentMetaAcc,
     });
     user
@@ -117,8 +117,8 @@ exports.user_signup_post = function (req, res, next) {
         res.render("signup", {
           page: "Signup",
           menu_id: "signup",
-          email: null,
-          error: "Email or Metamask account already registered",
+          name: null,
+          error: error,
         });
       });
   });
