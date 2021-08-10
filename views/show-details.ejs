@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include static/header %>
+</head>
+
+<body>
+    <% include static/menu %>
+        <div class="container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/management"">Management</a></li>
+                    <li class=" breadcrumb-item active" aria-current="page">Show details</li>
+                </ol>
+            </nav>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <h3 class="h3Title">
+                        <%= page %>
+                    </h3>
+                </div>
+            </div>
+            <br>
+        </div>
+        <br>
+        <% include static/footer %>
+</body>
+<% include static/scripts %>
+    <script>
+        var ethKey = null;
+        (async function () {
+            ethKey = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        })()
+
+        window.ethereum.on('accountsChanged', function (accounts) {
+            window.location = "/logout";
+        })
+
+        window.ethereum.on('chainChanged', function (chainId) {
+            window.location = "/logout";
+        })
+    </script>
+
+</html>

@@ -24,28 +24,18 @@
             <br>
             <form action="/register-bike" method="post">
                 <div class="row justify-content-center">
-                    <div class="col col-lg-6">
-                        <h5 class="h5Title">Bike details</h5>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
                     <div class="col col-lg-3">
+                        <h5 class="h5Title">Bike details</h5>
                         <div class="form-group">
                             <label class="lblInput" for="inputMake">Make:</label>
                             <input type="text" class="input-style form-control" name="inputMake" id="inputMake"
                                 placeholder="Make..." required>
                         </div>
-                    </div>
-                    <div class="col col-lg-3">
                         <div class="form-group">
                             <label class="lblInput" for="inputModel">Model:</label>
                             <input type="text" class="input-style form-control" name="inputModel" id="inputModel"
                                 placeholder="Model..." required>
                         </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col col-lg-3">
                         <div class="form-group">
                             <label class="lblInput" for="inputFrame">Frame No.:</label>
                             <input type="text" class="input-style form-control" name="inputFrame" id="inputFrame"
@@ -53,28 +43,12 @@
                         </div>
                     </div>
                     <div class="col col-lg-3">
-                        <div class="form-group">
-                            <label class="lblInput" for="inputDetails">Bike details:</label>
-                            <textarea type="textbox" class="input-style form-control" name="inputDetails"
-                                id="inputDetails" placeholder="Details about the bike..." rows="2" minlength="10"
-                                maxlength="50" required></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col col-lg-6">
                         <h5 class="h5Title">Owner details</h5>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col col-lg-3">
                         <div class="form-group">
                             <label class="lblInput" for="inputName">Name:</label>
                             <input type="text" class="input-style form-control" name="inputName" id="inputName"
                                 placeholder="Name..." required>
                         </div>
-                    </div>
-                    <div class="col col-lg-3">
                         <div class="form-group">
                             <label class="lblInput" for="inputEmail">Email:</label>
                             <input type="text" class="input-style form-control" name="inputEmail" id="inputEmail"
@@ -82,9 +56,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center" style="margin-top: 50px;">
-                    <button type="submit" class="btn btn-secondary">Send</button>
-                    <button type="reset" class="btn btn-warning">Reset</button>
+                <div class="row justify-content-center">
+                    <div class="text-center" style="margin-top: 40px;">
+                        <button type="submit" class="btn btn-secondary">Send</button>
+                        <button type="reset" class="btn btn-warning">Reset</button>
+                    </div>
                 </div>
                 <br>
             </form>
@@ -107,6 +83,5 @@
             window.location = "/logout";
         })
     </script>
-
 
 </html>

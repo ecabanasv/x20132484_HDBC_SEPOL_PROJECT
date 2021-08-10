@@ -22,12 +22,12 @@ router.get("/add-details", bikeapp_controller.add_details_get);
 router.post("/add-details", bikeapp_controller.add_details_post);
 
 // Management - Transfer Ownership
-// router.get("/transfer-ownership", bikeapp_controller.transfer_ownership_get);
-// router.post("/transfer-ownership", bikeapp_controller.transfer_ownership_post);
+router.get("/transfer-ownership", bikeapp_controller.transfer_ownership_get);
+router.post("/transfer-ownership", bikeapp_controller.transfer_ownership_post);
 
 // Management - Renounce Ownership
-// router.get("/renounce-ownership", bikeapp_controller.renounce_ownership_get);
-// router.post("/renounce-ownership", bikeapp_controller.renounce_ownership_post);
+router.get("/renounce-ownership", bikeapp_controller.renounce_ownership_get);
+router.post("/renounce-ownership", bikeapp_controller.renounce_ownership_post);
 
 // FAQ
 router.get("/faq", bikeapp_controller.faq_get);

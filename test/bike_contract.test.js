@@ -27,11 +27,7 @@ contract("BikeContract", function (accounts) {
       );
       // test BikeCreated event
       truffleAssert.eventEmitted(bike, "BikeCreated", (ev) => {
-        return (
-          ev.make == make &&
-          ev.model == model &&
-          ev.frame == frame
-        );
+        return ev.make == make && ev.model == model && ev.frame == frame;
       });
       // test OwnerAdded event
       truffleAssert.eventEmitted(bike, "OwnerAdded", (ev) => {
@@ -101,34 +97,15 @@ contract("BikeContract", function (accounts) {
   });
 
   describe("@ Owner functions", () => {
-    /* updateOwner */
-    it("it should update a specific registered owner", async () => {
-      const name = "Rafael";
-      const email = "rafael@gmail.com";
-      const instance = await BikeContract.deployed();
-      //Update owner 0 to Rafael, rafael@gmail.com
-      const owner = await instance.updateOwner(
-        0,
-        "Rafael",
-        "rafael@gmail.com",
-        { from: accounts[0] }
-      );
-      //Test OwnerUpdated event
-      truffleAssert.eventEmitted(owner, "OwnerUpdated", (ev) => {
-        return ev.ownerID == 0 && ev.name == name && ev.email == email;
-      });
-    });
-
     /* showOwnerDetails */
-
     it("it should show a specific owner registered", async () => {
       const instance = await BikeContract.deployed();
       //Show owner (0)
       const result = await instance.showOwnerDetails(0);
       //Owner 1: Rafael
-      assert.equal(result[0], "Rafael");
+      assert.equal(result[0], "Enrique");
       //Owner 1: rafael@gmail.com
-      assert.equal(result[1], "rafael@gmail.com");
+      assert.equal(result[1], "ecvoracle@gmail.com");
     });
   });
 
@@ -148,12 +125,13 @@ contract("BikeContract", function (accounts) {
     });
 
     /* transferOwnership */
-
     it("it should transfer ownership to future owner", async () => {
       const instance = await BikeContract.deployed();
       await instance.transferOwnership(
         1,
         "0x1A771540337888ADBb230f310ca442bA8B7E01aE",
+        "Roberto",
+        "roberto@gmail.com",
         { from: accounts[0] }
       );
       const bikeList = await instance.showListBikeDetails();
@@ -165,7 +143,6 @@ contract("BikeContract", function (accounts) {
     });
 
     /* renounceOwnership */
-
     it("it should renounce its bike ownership", async () => {
       const instance = await BikeContract.deployed();
       await instance.renounceOwnership(1, { from: accounts[0] });

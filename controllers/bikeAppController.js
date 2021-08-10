@@ -6,10 +6,10 @@ let contract = require("@truffle/contract");
 // Provider 7545 (Ganache)
 let provider = new Web3.providers.HttpProvider("http://localhost:7545");
 
-// Get diaryList contract from build folder
+// Get BikeContract contract from build folder
 const bikeJSON = require("../build/contracts/BikeContract.json");
 
-// Assign diaryList to variable DiaryList
+// Assign bikeJSON to variable BikeContract
 let BikeContract = contract(bikeJSON);
 
 // Set provider
@@ -70,8 +70,6 @@ exports.regiter_bike_get = async function (req, res) {
 exports.regiter_bike_post = async (req, res) => {
   // Assign JWT token to token (if exist)
   let token = req.cookies.token;
-  // If token exist call function newEntry (BikeContract.sol)
-  // And create new Diary entry
   try {
     if (token) {
       user_address = jwt.verify(token, "BikeSmartContract").address;
@@ -80,7 +78,6 @@ exports.regiter_bike_post = async (req, res) => {
         req.body.inputMake,
         req.body.inputModel,
         req.body.inputFrame,
-        req.body.inputDetails,
         req.body.inputName,
         req.body.inputEmail,
         {
@@ -99,7 +96,7 @@ exports.regiter_bike_post = async (req, res) => {
 exports.management_get = async function (req, res) {
   // Get token value if exist
   let token = req.cookies.token;
-  // Empty array for user entries
+  // Empty array for user bikes
   let user_bikes = [];
   try {
     if (token === undefined) {
@@ -112,7 +109,7 @@ exports.management_get = async function (req, res) {
       let bikeContract = await BikeContract.deployed();
       bikeList = await bikeContract.showListBikeDetails.call();
       for (let i = 0; i < bikeList.length; i++) {
-        if (bikeList[i][6].toLowerCase() == user_address.toLowerCase()) {
+        if (bikeList[i][5].toLowerCase() == user_address.toLowerCase()) {
           user_bikes.push(bikeList[i]);
         }
       }
@@ -133,9 +130,36 @@ exports.management_get = async function (req, res) {
 };
 
 // Management - Show details (GET)
-// exports.show_details_get = async function (req, res){
+exports.show_details_get = async (req, res) => {
+  // Get token value if exist
+  let token = req.cookies.token;
+  // Empty array for user bikes
+  let bike_details = [];
+  try {
+    if (token === undefined) {
+      res.redirect("/logout");
+    } else {
+      // Assign name & address from token
+      let user_address = jwt.verify(token, "BikeSmartContract").address;
 
-// };
+      // Get Bike Details
+      bikeDetails = await bikeContract.showBikeDetails.call(req.body.bike_id);
+
+      //struct listDetails {uint256 bikeID; uint256 date; string details; }
+      let bikeContract = await BikeContract.deployed();
+      detailsList = await bikeContract.showAllDetails.call();
+      for (let i = 0; i < detailsList.length; i++) {
+        if (detailsList[i][0] == req.body.bike_id) {
+          bike_details.push(detailsList[i]);
+        }
+      }
+    }
+  } catch (err) {
+    console.log("error");
+    console.log(err);
+    res.redirect("/logout");
+  }
+};
 
 // Management - Add details (GET)
 exports.add_details_get = async function (req, res) {
@@ -147,11 +171,12 @@ exports.add_details_get = async function (req, res) {
   // If token doesn't exist render normal page
   if (token) {
     user_name = jwt.verify(token, "BikeSmartContract").username;
-    res.render("register-bike", {
-      page: "Register new bike",
-      menu_id: "register-bike",
+    res.render("add-details", {
+      page: "Add details",
+      menu_id: "add-details",
       name: user_name,
       bike_id: req.query.bike_id,
+      bike_frame: req.query.bike_frame,
     });
   } else {
     return res.render("index", {
@@ -166,39 +191,37 @@ exports.add_details_get = async function (req, res) {
 exports.add_details_post = async (req, res) => {
   // Assign JWT token to token (if exist)
   let token = req.cookies.token;
-  // Empty array for user entries
+  // Empty array for user bikes
   let user_bikes = [];
-  // If token exist call function updateEntry (DiaryList.sol)
-  // And update Diary entry
   try {
     if (token) {
-      user_name = jwt.verify(token, "BikeSmartContract").username;
+      // Get user address from JWT token
       user_address = jwt.verify(token, "BikeSmartContract").address;
+
+      // Get JSON params from BikeContract
       const bikeContract = await BikeContract.deployed();
-      await bikeContract.addDetails.sendTransaction(
-        req.body.bike_id,
-        req.body.inputDetails,
-        {
-          from: user_address,
-          gas: GAS_LIMIT,
-        }
-      );
 
-      let bikeContract = await BikeContract.deployed();
-      bikeList = await bikeContract.showListBikeDetails.call();
-      for (let i = 0; i < bikeList.length; i++) {
-        if (bikeList[i][6].toLowerCase() == user_address.toLowerCase()) {
-          user_bikes.push(bikeList[i]);
-        }
+      // Get Bike Details
+      bikeAddress = await bikeContract.showBikeDetails.call(req.body.bike_id);
+
+      // If user try to update details for a different bike id it will be logout
+      // If match can send transaction
+      if (user_address == bikeAddress[4].toLowerCase()) {
+        await bikeContract.addDetails.sendTransaction(
+          req.body.bike_id,
+          req.body.inputDetails,
+          {
+            from: user_address,
+            gas: GAS_LIMIT,
+          }
+        );
+      } else {
+        console.log(
+          "Invalid Metamask account. Please login with the correct one."
+        );
+        res.redirect("/logout");
       }
-
-      res.render("management", {
-        page: "Management",
-        menu_id: "management",
-        name: user_name,
-        bikes: user_bikes,
-        moment: moment,
-      });
+      res.redirect("/management");
     }
   } catch (err) {
     console.log("error");
@@ -208,24 +231,143 @@ exports.add_details_post = async (req, res) => {
 };
 
 // Management - Transfer ownership (GET)
-// exports.transfer_ownership_get = async function (req,res){
-
-// };
+exports.transfer_ownership_get = async function (req, res) {
+  // Get token value if exist
+  let token = req.cookies.token;
+  // Get name from JWT token if exist
+  let user_name = null;
+  // If token exists render page with name value (login name)
+  // If token doesn't exist render normal page
+  if (token) {
+    // Get user address from JWT token
+    user_name = jwt.verify(token, "BikeSmartContract").username;
+    res.render("transfer-ownership", {
+      page: "Transfer ownership",
+      menu_id: "transfer-ownership",
+      name: user_name,
+      bike_id: req.query.bike_id,
+      bike_frame: req.query.bike_frame,
+    });
+  } else {
+    return res.render("index", {
+      page: "Home",
+      menu_id: "home",
+      name: null,
+    });
+  }
+};
 
 // Management -  Transfer ownership (POST)
-// exports.transfer_ownership_post = async function (req,res){
+exports.transfer_ownership_post = async (req, res) => {
+  // Assign JWT token to token (if exist)
+  let token = req.cookies.token;
+  // Empty array for user bikes
+  let user_bikes = [];
+  try {
+    if (token) {
+      // Get user address from JWT token
+      user_address = jwt.verify(token, "BikeSmartContract").address;
 
-// };
+      // Get JSON params from BikeContract
+      const bikeContract = await BikeContract.deployed();
+
+      // Get Bike Details
+      bikeAddress = await bikeContract.showBikeDetails.call(req.body.bike_id);
+
+      // If user try to renounce different ID (changed manually in URL) it will be logout
+      // If match can send transaction
+      if (user_address == bikeAddress[4].toLowerCase()) {
+        await bikeContract.transferOwnership.sendTransaction(
+          req.body.bike_id,
+          req.body.inputNewAddress,
+          req.body.inputName,
+          req.body.inputEmail,
+          {
+            from: user_address,
+            gas: GAS_LIMIT,
+          }
+        );
+      } else {
+        console.log(
+          "Invalid Metamask account. Please login with the correct one."
+        );
+        res.redirect("/logout");
+      }
+      res.redirect("/management");
+    }
+  } catch (err) {
+    console.log("error");
+    console.log(err);
+    res.redirect("/logout");
+  }
+};
 
 // Management - Renounce ownership (GET)
-// exports.renounce_ownership_get = async function (req,res){
-
-// };
+exports.renounce_ownership_get = async function (req, res) {
+  // Get token value if exist
+  let token = req.cookies.token;
+  // Get name from JWT token if exist
+  let user_name = null;
+  // If token exists render page with name value (login name)
+  // If token doesn't exist render normal page
+  if (token) {
+    // Get user address from JWT token
+    user_name = jwt.verify(token, "BikeSmartContract").username;
+    res.render("renounce-ownership", {
+      page: "Renounce ownership",
+      menu_id: "renounce-ownership",
+      name: user_name,
+      bike_id: req.query.bike_id,
+      bike_frame: req.query.bike_frame,
+    });
+  } else {
+    return res.render("index", {
+      page: "Home",
+      menu_id: "home",
+      name: null,
+    });
+  }
+};
 
 // Management -  Renounce ownership (POST)
-// exports.renounce_ownership_post = async function (req,res){
+exports.renounce_ownership_post = async function (req, res) {
+  // Assign JWT token to token (if exist)
+  let token = req.cookies.token;
+  // Empty array for user bikes
+  let user_bikes = [];
+  try {
+    if (token) {
+      // Get user address from JWT token
+      user_address = jwt.verify(token, "BikeSmartContract").address;
 
-// };
+      // Get JSON params from BikeContract
+      const bikeContract = await BikeContract.deployed();
+
+      // Get Bike Details
+      bikeAddress = await bikeContract.showBikeDetails.call(req.body.bike_id);
+
+      // If user try to renounce different ID (changed manually in URL) it will be logout
+      // If match can send transaction
+      if (user_address == bikeAddress[4].toLowerCase()) {
+        await bikeContract.renounceOwnership.sendTransaction(req.body.bike_id, {
+          from: user_address,
+          gas: GAS_LIMIT,
+        });
+      } else {
+        console.log(
+          "Invalid Metamask account. Please login with the correct one."
+        );
+        res.redirect("/logout");
+      }
+
+      res.redirect("/management");
+    }
+  } catch (err) {
+    console.log("error");
+    console.log(err);
+    res.redirect("/logout");
+  }
+};
 
 // FAQ (GET)
 exports.faq_get = async function (req, res) {

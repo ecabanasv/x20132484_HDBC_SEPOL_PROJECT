@@ -48,10 +48,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(var i=0; i < bikes.length; i++) { %>
+                    <% id=1; for(var i=0; i < bikes.length; i++) { %>
                         <tr>
                             <th scope="row">
-                                <%= i %>
+                                <%= id++ %>
                             </th>
                             <td>
                                 <%= encodeURIComponent(bikes[i][2]) %>
@@ -73,7 +73,6 @@
                                         value="<%= encodeURIComponent(bikes[i][4]) %>">
                                     <input type="hidden" name="bike_details"
                                         value="<%= encodeURIComponent(bikes[i][5]) %>">
-                                    <input type="hidden" name="currentMetaAcc" id="currentMetaAcc">
                                     <div class="float-start">
                                         <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
                                             type="submit"><i class="bi bi-card-text"></i></button>
@@ -81,15 +80,8 @@
                                 </form>
                                 <form action="/add-details" method="get">
                                     <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
-                                    <input type="hidden" name="bike_make"
-                                        value="<%= encodeURIComponent(bikes[i][2]) %>">
-                                    <input type="hidden" name="bike_model"
-                                        value="<%= encodeURIComponent(bikes[i][3]) %>">
                                     <input type="hidden" name="bike_frame"
                                         value="<%= encodeURIComponent(bikes[i][4]) %>">
-                                    <input type="hidden" name="bike_details"
-                                        value="<%= encodeURIComponent(bikes[i][5]) %>">
-                                    <input type="hidden" name="currentMetaAcc" id="currentMetaAcc">
                                     <div class="float-start">
                                         <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
                                             type="submit"><i class="bi bi-plus-square"></i></button>
@@ -97,15 +89,8 @@
                                 </form>
                                 <form action="/transfer-ownership" method="get">
                                     <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
-                                    <input type="hidden" name="bike_make"
-                                        value="<%= encodeURIComponent(bikes[i][2]) %>">
-                                    <input type="hidden" name="bike_model"
-                                        value="<%= encodeURIComponent(bikes[i][3]) %>">
                                     <input type="hidden" name="bike_frame"
                                         value="<%= encodeURIComponent(bikes[i][4]) %>">
-                                    <input type="hidden" name="bike_details"
-                                        value="<%= encodeURIComponent(bikes[i][5]) %>">
-                                    <input type="hidden" name="currentMetaAcc" id="currentMetaAcc">
                                     <div class="float-start">
                                         <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
                                             type="submit"><i class="bi bi-arrow-return-right"></i></button>
@@ -113,15 +98,8 @@
                                 </form>
                                 <form action="/renounce-ownership" method="get">
                                     <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
-                                    <input type="hidden" name="bike_make"
-                                        value="<%= encodeURIComponent(bikes[i][2]) %>">
-                                    <input type="hidden" name="bike_model"
-                                        value="<%= encodeURIComponent(bikes[i][3]) %>">
                                     <input type="hidden" name="bike_frame"
                                         value="<%= encodeURIComponent(bikes[i][4]) %>">
-                                    <input type="hidden" name="bike_details"
-                                        value="<%= encodeURIComponent(bikes[i][5]) %>">
-                                    <input type="hidden" name="currentMetaAcc" id="currentMetaAcc">
                                     <div class="float-start">
                                         <button class="btn btn-outline-danger btn-sm" style="margin-bottom: 5px;"
                                             type="submit"><i class="bi bi-file-excel"></i></button>
@@ -141,8 +119,6 @@
         var ethKey = null;
         (async function () {
             ethKey = await window.ethereum.request({ method: 'eth_requestAccounts' })
-            let metaAcc = (await document.getElementById("currentMetaAcc"))
-            metaAcc.value = ethKey[0]
         })()
 
         window.ethereum.on('accountsChanged', function (accounts) {

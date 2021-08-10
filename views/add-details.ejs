@@ -11,7 +11,8 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Add details</li>
+                    <li class="breadcrumb-item"><a href="/management"">Management</a></li>
+                    <li class=" breadcrumb-item active" aria-current="page">Add details</li>
                 </ol>
             </nav>
             <div class="row justify-content-center">
@@ -24,22 +25,23 @@
             <br>
             <form action="/add-details" method="post">
                 <div class="row justify-content-center">
-                    <div class="col col-lg-6">
-                        <h5 class="h5Title">Bike details</h5>
+                    <div class="col col-lg-5">
+                        <h5 class="h5Title">Bike frame: <%= bike_frame %>
+                        </h5>
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col col-lg-3">
+                    <div class="col col-lg-5">
                         <div class="form-group">
-                            <label class="lblInput" for="inputDetails">Bike details:</label>
+                            <label class="lblInput" for="inputDetails">Add information in the textbox below:</label>
                             <textarea type="textbox" class="input-style form-control" name="inputDetails"
-                                id="inputDetails" placeholder="Details about the bike..." rows="2" minlength="10"
-                                maxlength="50" required></textarea>
+                                id="inputDetails" placeholder="e.g. Brakes replaced in shop XXX on 25/03/2021 (50 EUR)"
+                                rows="4" minlength="10" maxlength="180" required></textarea>
                             <input type="hidden" name="bike_id" value="<%= bike_id %>">
                         </div>
                     </div>
                 </div>
-                <div class="text-center" style="margin-top: 50px;">
+                <div class="text-center" style="margin-top: 10px;">
                     <button type="submit" class="btn btn-secondary">Send</button>
                     <button type="reset" class="btn btn-warning">Reset</button>
                 </div>
@@ -64,6 +66,4 @@
             window.location = "/logout";
         })
     </script>
-
-
 </html>

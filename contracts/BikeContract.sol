@@ -9,7 +9,6 @@ contract BikeContract {
     address private emptyAddress = 0x0000000000000000000000000000000000000000;
 
     // struct bikeDetails
-
     struct bikeDetails {
         uint256 bikeID;
         uint256 regDate;
@@ -20,7 +19,6 @@ contract BikeContract {
     }
 
     // struck ownerDetails
-
     struct ownerDetails {
         uint256 ownerID;
         string name;
@@ -28,7 +26,6 @@ contract BikeContract {
     }
 
     // struck listDetails
-
     struct listDetails {
         uint256 bikeID;
         uint256 date;
@@ -90,7 +87,6 @@ contract BikeContract {
     }
 
     /* Bike functions */
-
     function newBike(
         string memory _make,
         string memory _model,
@@ -126,19 +122,20 @@ contract BikeContract {
             uint256,
             string memory,
             string memory,
-            string memory
+            string memory,
+            address
         )
     {
         return (
             bikes[_bikeID].regDate,
             bikes[_bikeID].make,
             bikes[_bikeID].model,
-            bikes[_bikeID].frame
+            bikes[_bikeID].frame,
+            bikes[_bikeID].user_address
         );
     }
 
     /* Owner functions */
-
     function _newOwner(string memory _name, string memory _email)
         private
         emptyOwnerString(_name, _email)
@@ -148,11 +145,11 @@ contract BikeContract {
         emit OwnerAdded(bikeCounter, _name, _email);
     }
 
-    function updateOwner(
+    function _updateOwner(
         uint256 _ownerID,
         string memory _name,
         string memory _email
-    ) public emptyOwnerString(_name, _email) {
+    ) private emptyOwnerString(_name, _email) {
         owner[_ownerID].name = _name;
         owner[_ownerID].email = _email;
         emit OwnerUpdated(_ownerID, _name, _email);
@@ -167,7 +164,6 @@ contract BikeContract {
     }
 
     /* Other functions */
-
     function addDetails(uint256 _id, string memory _details)
         public
         emptyDetailsString(_details)
@@ -185,10 +181,15 @@ contract BikeContract {
         return _details;
     }
 
-
-    function transferOwnership(uint256 _id, address _newAddress) public {
+    function transferOwnership(
+        uint256 _id,
+        address _newAddress,
+        string memory _name,
+        string memory _email
+    ) public {
         bikes[_id].user_address = _newAddress;
         emit transferDone(_id, _newAddress);
+        _updateOwner(_id, _name, _email);
     }
 
     function renounceOwnership(uint256 _id) public {
