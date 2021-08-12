@@ -25,109 +25,84 @@
                 </div>
             </div>
             <br>
-            <!-- 
-        struct bikeDetails 
-        {
-        uint256 bikeID;
-        uint256 regDate;
-        string make;
-        string model;
-        string frame;
-        string details;
-        address user_address;
-    } 
-    -->
-            <table class="table table-sm table-striped table-hover table-borderless">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Make</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Frame</th>
-                        <th class="d-flex justify-content-end" scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% id=1; for(var i=0; i < bikes.length; i++) { %>
+            <div class="row justify-content-center">
+                <table class="table table-sm table-responsive table-striped table-hover w-75">
+                    <thead>
                         <tr>
-                            <th scope="row">
-                                <%= id++ %>
-                            </th>
-                            <td>
-                                <%= encodeURIComponent(bikes[i][2]) %>
-                            </td>
-                            <td>
-                                <%= encodeURIComponent(bikes[i][3]) %>
-                            </td>
-                            <td>
-                                <%= encodeURIComponent(bikes[i][4]) %>
-                            </td>
-                            <td class="d-flex justify-content-end">
-                                <form action="/show-details" method="get">
-                                    <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
-                                    <input type="hidden" name="bike_make"
-                                        value="<%= encodeURIComponent(bikes[i][2]) %>">
-                                    <input type="hidden" name="bike_model"
-                                        value="<%= encodeURIComponent(bikes[i][3]) %>">
-                                    <input type="hidden" name="bike_frame"
-                                        value="<%= encodeURIComponent(bikes[i][4]) %>">
-                                    <input type="hidden" name="bike_details"
-                                        value="<%= encodeURIComponent(bikes[i][5]) %>">
-                                    <div class="float-start">
-                                        <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
-                                            type="submit"><i class="bi bi-card-text"></i></button>
-                                    </div>
-                                </form>
-                                <form action="/add-details" method="get">
-                                    <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
-                                    <input type="hidden" name="bike_frame"
-                                        value="<%= encodeURIComponent(bikes[i][4]) %>">
-                                    <div class="float-start">
-                                        <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
-                                            type="submit"><i class="bi bi-plus-square"></i></button>
-                                    </div>
-                                </form>
-                                <form action="/transfer-ownership" method="get">
-                                    <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
-                                    <input type="hidden" name="bike_frame"
-                                        value="<%= encodeURIComponent(bikes[i][4]) %>">
-                                    <div class="float-start">
-                                        <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
-                                            type="submit"><i class="bi bi-arrow-return-right"></i></button>
-                                    </div>
-                                </form>
-                                <form action="/renounce-ownership" method="get">
-                                    <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
-                                    <input type="hidden" name="bike_frame"
-                                        value="<%= encodeURIComponent(bikes[i][4]) %>">
-                                    <div class="float-start">
-                                        <button class="btn btn-outline-danger btn-sm" style="margin-bottom: 5px;"
-                                            type="submit"><i class="bi bi-file-excel"></i></button>
-                                    </div>
-                                </form>
-                            </td>
+                            <th scope="col">#</th>
+                            <th scope="col">Make</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">Frame</th>
+                            <th class="d-flex justify-content-end" scope="col">Actions</th>
                         </tr>
-                        <% } %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <% id=1; for(var i=0; i < bikes.length; i++) { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= id++ %>
+                                </th>
+                                <td>
+                                    <%= encodeURIComponent(bikes[i][2]) %>
+                                </td>
+                                <td>
+                                    <%= encodeURIComponent(bikes[i][3]) %>
+                                </td>
+                                <td>
+                                    <%= encodeURIComponent(bikes[i][4]) %>
+                                </td>
+                                <td class="d-flex justify-content-end">
+                                    <form action="/show-details" method="get">
+                                        <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
+                                        <div class="float-start">
+                                            <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
+                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Show details" alt="Show details"><i
+                                                    class="bi bi-card-text"></i></button>
+                                        </div>
+                                    </form>
+                                    <form action="/add-details" method="get">
+                                        <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
+                                        <div class="float-start">
+                                            <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
+                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Add details" alt="Add details"><i
+                                                    class="bi bi-plus-square"></i></button>
+                                        </div>
+                                    </form>
+                                    <form action="/transfer-ownership" method="get">
+                                        <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
+                                        <div class="float-start">
+                                            <button class="btn btn-outline-secondary btn-sm" style="margin-bottom: 5px;"
+                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Transfer ownership" alt="Transfer ownership"><i
+                                                    class="bi bi-arrow-return-right"></i></button>
+                                        </div>
+                                    </form>
+                                    <form action="/renounce-ownership" method="get">
+                                        <input type="hidden" name="bike_id" value="<%= bikes[i][0] %>">
+                                        <div class="float-start">
+                                            <button class="btn btn-outline-danger btn-sm" style="margin-bottom: 5px;"
+                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Renounce ownership" alt="Renounce ownership"><i
+                                                    class="bi bi-file-excel"></i></button>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <br><br>
         <% include static/footer %>
 </body>
 <% include static/scripts %>
     <script>
-        var ethKey = null;
-        (async function () {
-            ethKey = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        })()
-
-        window.ethereum.on('accountsChanged', function (accounts) {
-            window.location = "/logout";
-        })
-
-        window.ethereum.on('chainChanged', function (chainId) {
-            window.location = "/logout";
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
-
 </html>

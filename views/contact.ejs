@@ -7,13 +7,48 @@
 
 <body>
     <% include static/menu %>
-        <div class="container-fluid">
-            <h2 class="hTitle">
-                <%= page %>
-            </h2>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contact</li>
+            </ol>
+        </nav>
+        <div class="row justify-content-center">
+            <div class="col col-auto">
+                <h3 class="h3Title">
+                    <%= page %>
+                </h3>
+            </div>
+        </div>
+        <br>
+    </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-lg-6">
+                    <form>
+                        <div class="form-group">
+                            <label for="InputName">Name</label>
+                            <input type="text" class="form-control" id="inputName" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email address</label>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSubject">Subject</label>
+                            <input type="text" class="form-control" id="inputSubject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputMessage">Message</label>
+                            <textarea class="form-control" id="text" placeholder="Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <% include static/footer %>
 </body>
 <% include static/scripts %>
-
 </html>

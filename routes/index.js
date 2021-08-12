@@ -15,7 +15,7 @@ router.post("/register-bike", bikeapp_controller.regiter_bike_post);
 router.get("/management", bikeapp_controller.management_get);
 
 // Management - Show Details
-// router.get("/show-details", bikeapp_controller.show_details_get);
+router.get("/show-details", bikeapp_controller.show_details_get);
 
 // Management - Add Details
 router.get("/add-details", bikeapp_controller.add_details_get);

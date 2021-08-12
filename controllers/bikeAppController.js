@@ -133,26 +133,42 @@ exports.management_get = async function (req, res) {
 exports.show_details_get = async (req, res) => {
   // Get token value if exist
   let token = req.cookies.token;
-  // Empty array for user bikes
   let bike_details = [];
+  let bike_info = [];
+  let owner_info = [];
+  // Empty array for user bikes
   try {
     if (token === undefined) {
       res.redirect("/logout");
     } else {
-      // Assign name & address from token
-      let user_address = jwt.verify(token, "BikeSmartContract").address;
+      user_name = jwt.verify(token, "BikeSmartContract").username;
+
+      // Get JSON params from BikeContract
+      const bikeContract = await BikeContract.deployed();
 
       // Get Bike Details
-      bikeDetails = await bikeContract.showBikeDetails.call(req.body.bike_id);
+      bike_info = await bikeContract.showBikeDetails.call(req.query.bike_id);
+      // Get Owner Details
+      owner_info = await bikeContract.showOwnerDetails.call(req.query.bike_id);
 
       //struct listDetails {uint256 bikeID; uint256 date; string details; }
-      let bikeContract = await BikeContract.deployed();
-      detailsList = await bikeContract.showAllDetails.call();
-      for (let i = 0; i < detailsList.length; i++) {
-        if (detailsList[i][0] == req.body.bike_id) {
-          bike_details.push(detailsList[i]);
+      details_list = await bikeContract.showAllDetails.call();
+      for (let i = 0; i < details_list.length; i++) {
+        if (details_list[i][0] == req.query.bike_id) {
+          bike_details.push(details_list[i]);
         }
       }
+
+      res.render("show-details", {
+        page: "Show details",
+        menu_id: "show-details",
+        name: user_name,
+        bike_id: req.query.bike_id,
+        bike: bike_info,
+        owner: owner_info,
+        details: bike_details,
+        moment: moment,
+      });
     }
   } catch (err) {
     console.log("error");
@@ -167,16 +183,23 @@ exports.add_details_get = async function (req, res) {
   let token = req.cookies.token;
   // Get name from JWT token if exist
   let user_name = null;
+  let bike_info = [];
   // If token exists render page with name value (login name)
   // If token doesn't exist render normal page
   if (token) {
     user_name = jwt.verify(token, "BikeSmartContract").username;
+    // Get JSON params from BikeContract
+    const bikeContract = await BikeContract.deployed();
+    // Get Bike Details
+    bike_info = await bikeContract.showBikeDetails.call(req.query.bike_id);
+
     res.render("add-details", {
       page: "Add details",
       menu_id: "add-details",
       name: user_name,
       bike_id: req.query.bike_id,
-      bike_frame: req.query.bike_frame,
+      bike: bike_info,
+      moment: moment,
     });
   } else {
     return res.render("index", {
@@ -192,7 +215,7 @@ exports.add_details_post = async (req, res) => {
   // Assign JWT token to token (if exist)
   let token = req.cookies.token;
   // Empty array for user bikes
-  let user_bikes = [];
+  let bike_info = [];
   try {
     if (token) {
       // Get user address from JWT token
@@ -202,11 +225,11 @@ exports.add_details_post = async (req, res) => {
       const bikeContract = await BikeContract.deployed();
 
       // Get Bike Details
-      bikeAddress = await bikeContract.showBikeDetails.call(req.body.bike_id);
+      bike_info = await bikeContract.showBikeDetails.call(req.body.bike_id);
 
       // If user try to update details for a different bike id it will be logout
       // If match can send transaction
-      if (user_address == bikeAddress[4].toLowerCase()) {
+      if (user_address == bike_info[4].toLowerCase()) {
         await bikeContract.addDetails.sendTransaction(
           req.body.bike_id,
           req.body.inputDetails,
@@ -221,7 +244,7 @@ exports.add_details_post = async (req, res) => {
         );
         res.redirect("/logout");
       }
-      res.redirect("/management");
+      res.redirect("/show-details?bike_id=" + req.body.bike_id);
     }
   } catch (err) {
     console.log("error");
@@ -236,17 +259,30 @@ exports.transfer_ownership_get = async function (req, res) {
   let token = req.cookies.token;
   // Get name from JWT token if exist
   let user_name = null;
+  // info bike
+  let bike_info = [];
+  // owner info
+  let owner_info = [];
   // If token exists render page with name value (login name)
   // If token doesn't exist render normal page
   if (token) {
     // Get user address from JWT token
     user_name = jwt.verify(token, "BikeSmartContract").username;
+    // Get JSON params from BikeContract
+    const bikeContract = await BikeContract.deployed();
+    // Get Bike Details
+    bike_info = await bikeContract.showBikeDetails.call(req.query.bike_id);
+    // Get Owner Details
+    owner_info = await bikeContract.showOwnerDetails.call(req.query.bike_id);
+
     res.render("transfer-ownership", {
       page: "Transfer ownership",
       menu_id: "transfer-ownership",
       name: user_name,
       bike_id: req.query.bike_id,
-      bike_frame: req.query.bike_frame,
+      bike: bike_info,
+      owner: owner_info,
+      moment: moment,
     });
   } else {
     return res.render("index", {
@@ -272,11 +308,11 @@ exports.transfer_ownership_post = async (req, res) => {
       const bikeContract = await BikeContract.deployed();
 
       // Get Bike Details
-      bikeAddress = await bikeContract.showBikeDetails.call(req.body.bike_id);
+      bike_info = await bikeContract.showBikeDetails.call(req.body.bike_id);
 
       // If user try to renounce different ID (changed manually in URL) it will be logout
       // If match can send transaction
-      if (user_address == bikeAddress[4].toLowerCase()) {
+      if (user_address == bike_info[4].toLowerCase()) {
         await bikeContract.transferOwnership.sendTransaction(
           req.body.bike_id,
           req.body.inputNewAddress,
@@ -313,12 +349,17 @@ exports.renounce_ownership_get = async function (req, res) {
   if (token) {
     // Get user address from JWT token
     user_name = jwt.verify(token, "BikeSmartContract").username;
+    // Get JSON params from BikeContract
+    const bikeContract = await BikeContract.deployed();
+    // Get Bike Details
+    bike_info = await bikeContract.showBikeDetails.call(req.query.bike_id);
     res.render("renounce-ownership", {
       page: "Renounce ownership",
       menu_id: "renounce-ownership",
       name: user_name,
       bike_id: req.query.bike_id,
-      bike_frame: req.query.bike_frame,
+      bike: bike_info,
+      moment: moment,
     });
   } else {
     return res.render("index", {
@@ -344,11 +385,11 @@ exports.renounce_ownership_post = async function (req, res) {
       const bikeContract = await BikeContract.deployed();
 
       // Get Bike Details
-      bikeAddress = await bikeContract.showBikeDetails.call(req.body.bike_id);
+      bike_info = await bikeContract.showBikeDetails.call(req.body.bike_id);
 
       // If user try to renounce different ID (changed manually in URL) it will be logout
       // If match can send transaction
-      if (user_address == bikeAddress[4].toLowerCase()) {
+      if (user_address == bike_info[4].toLowerCase()) {
         await bikeContract.renounceOwnership.sendTransaction(req.body.bike_id, {
           from: user_address,
           gas: GAS_LIMIT,

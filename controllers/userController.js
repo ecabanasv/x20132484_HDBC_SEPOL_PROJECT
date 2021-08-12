@@ -4,7 +4,7 @@ let bcrypt = require("bcrypt");
 let Users = require("../models/user.model");
 
 // Login (GET)
-exports.user_login_get = async function (req, res, next) {
+exports.user_login_get = async function (req, res) {
   // Get token value if exist
   let token = req.cookies.token;
   // Get name from JWT token if exist
@@ -25,7 +25,7 @@ exports.user_login_get = async function (req, res, next) {
 };
 
 // Login (POST)
-exports.user_login_post = async function (req, res, next) {
+exports.user_login_post = async function (req, res) {
   // Find email in MongoDB
   Users.findOne(
     {
@@ -77,7 +77,7 @@ exports.user_login_post = async function (req, res, next) {
 };
 
 // Signup (GET)
-exports.user_signup_get = async function (req, res, next) {
+exports.user_signup_get = async function (req, res) {
   // Get token value if exist
   let token = req.cookies.token;
   // Get name from JWT token if exist
@@ -98,34 +98,43 @@ exports.user_signup_get = async function (req, res, next) {
 };
 
 // Signup (POST)
-exports.user_signup_post = async function (req, res, next) {
-  // Hash the inputPassword and then saved in MongoDB with rest of user fields (user_name & address)
-  bcrypt.hash(req.body.inputPassword, 10).then((hash) => {
-    const user = new Users({
-      username: req.body.inputUsername,
-      hash_password: hash,
-      address: req.body.currentMetaAcc,
-    });
-    user
-      .save()
-      .then((response) => {
-        // if saved succesfully will go to login page
-        res.status(201).redirect("/login");
-      })
-      // if not send to signup page
-      .catch((error) => {
-        res.render("signup", {
-          page: "Signup",
-          menu_id: "signup",
-          name: null,
-          error: error,
-        });
+exports.user_signup_post = async function (req, res) {
+  if (req.body.inputPassword === req.body.inputRepeatPassword) {
+    // Hash the inputPassword and then saved in MongoDB with rest of user fields (user_name & address)
+    bcrypt.hash(req.body.inputPassword, 10).then((hash) => {
+      const user = new Users({
+        username: req.body.inputUsername,
+        hash_password: hash,
+        address: req.body.currentMetaAcc,
       });
-  });
+      user
+        .save()
+        .then((response) => {
+          // if saved succesfully will go to login page
+          res.status(201).redirect("/login");
+        })
+        // if not send to signup page
+        .catch((error) => {
+          res.render("signup", {
+            page: "Signup",
+            menu_id: "signup",
+            name: null,
+            error: "Username or Metamask account already registered",
+          });
+        });
+    });
+  } else {
+    return res.render("signup", {
+      page: "Sign-up",
+      menu_id: "signup",
+      name: null,
+      error: "Password doesn't match",
+    });
+  }
 };
 
 // Logout (GET)
-exports.user_logout_get = function (req, res, next) {
+exports.user_logout_get = function (req, res) {
   res.cookie("token", "", { maxAge: 0 });
   res.redirect("/");
 };

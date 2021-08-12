@@ -22,25 +22,60 @@
                     </h3>
                 </div>
             </div>
-            <br>
+        </div>
+        <div class="container">
+            <div class="row justify-content-evenly show-details">
+                <div class="col col-lg-3">
+                    <h4>Bike (<%= bike[3] %>)</h4>
+                    <ul>
+                        <li><span>Reg. date: </span>
+                            <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
+                        </li>
+                        <li><span>Make: </span>
+                            <%= bike[1] %>
+                        </li>
+                        <li><span>Model: </span>
+                            <%= bike[2] %>
+                        </li>
+                        <li><span>Frame: </span>
+                            <%= bike[3] %>
+                        </li>
+                    </ul>
+                    <h4>Current Owner</h4>
+                    <ul>
+                        <li><span>Name: </span>
+                            <%= owner[0] %>
+                        </li>
+                        <li><span>Email: </span>
+                            <%= owner[1] %>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col col-lg-5 d-none d-sm-block">
+                    <div>
+                        <h4>Historic details <span class="span-add-details">(<a
+                                    href="/add-details?bike_id=<%= bike_id %>">Add new</a>)</span></h4>
+                    </div>
+
+                    <% if (details.length !=0) { %>
+                        <ul>
+                            <% for(var i=0; i < details.length; i++) { %>
+                                <li>
+                                    <%= moment.unix(details[i][1]).format('DD/MM/YYYY') %> - <%= details[i][2] %>
+                                </li>
+                                <% } %>
+                        </ul>
+                        <% } else { %>
+                            <p>No details added yet</p>
+                            <% } %>
+                </div>
+            </div>
+        </div>
+        <br>
         </div>
         <br>
         <% include static/footer %>
 </body>
 <% include static/scripts %>
-    <script>
-        var ethKey = null;
-        (async function () {
-            ethKey = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        })()
-
-        window.ethereum.on('accountsChanged', function (accounts) {
-            window.location = "/logout";
-        })
-
-        window.ethereum.on('chainChanged', function (chainId) {
-            window.location = "/logout";
-        })
-    </script>
 
 </html>

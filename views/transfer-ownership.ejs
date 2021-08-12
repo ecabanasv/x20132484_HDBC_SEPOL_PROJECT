@@ -23,14 +23,36 @@
                 </div>
             </div>
             <br>
+        </div>
+        <div class="container">
             <form action="/transfer-ownership" method="post">
                 <div class="row justify-content-center">
                     <div class="col col-lg-4">
-                        <h5 class="h5Title">Bike frame: <%= bike_frame %>
-                        </h5>
+                        <h4>Bike (<%= bike[3] %>)</h4>
+                        <ul>
+                            <li><span>Reg. date: </span>
+                                <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
+                            </li>
+                            <li><span>Make: </span>
+                                <%= bike[1] %>
+                            </li>
+                            <li><span>Model: </span>
+                                <%= bike[2] %>
+                            </li>
+                            <li><span>Frame: </span>
+                                <%= bike[3] %>
+                            </li>
+                        </ul>
+                        <h4>Owner info</h4>
+                        <ul>
+                            <li><span>Name: </span>
+                                <%= owner[0] %>
+                            </li>
+                            <li><span>Email: </span>
+                                <%= owner[1] %>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="row justify-content-center">
                     <div class="col col-lg-4">
                         <div class="form-group">
                             <label class="lblInput" for="inputName">New Name:</label>
@@ -47,34 +69,18 @@
                             <input type="text" class="input-style form-control" name="inputNewAddress"
                                 id="inputNewAddress" placeholder="e.g. 0xf13da1dBd190c4A839ECB674e08cfB82eA804222"
                                 required>
+                            <div class="text-center" style="margin-top: 10px;">
+                                <button type="submit" class="btn btn-secondary btn-sm">Send</button>
+                                <button type="reset" class="btn btn-warning btn-sm">Reset</button>
+                            </div>
                         </div>
                         <input type="hidden" name="bike_id" value="<%= bike_id %>">
                     </div>
                 </div>
-                <div class="text-center" style="margin-top: 10px;">
-                    <button type="submit" class="btn btn-secondary">Send</button>
-                    <button type="reset" class="btn btn-warning">Reset</button>
-                </div>
-                <br>
             </form>
         </div>
-        <br>
         <% include static/footer %>
 </body>
 <% include static/scripts %>
-    <script>
-        var ethKey = null;
-        (async function () {
-            ethKey = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        })()
-
-        window.ethereum.on('accountsChanged', function (accounts) {
-            window.location = "/logout";
-        })
-
-        window.ethereum.on('chainChanged', function (chainId) {
-            window.location = "/logout";
-        })
-    </script>
 
 </html>
