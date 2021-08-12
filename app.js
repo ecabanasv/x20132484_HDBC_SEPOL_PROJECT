@@ -3,6 +3,8 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var compression = require("compression");
+let jwt = require("jsonwebtoken");
 // Favicon
 var favicon = require("serve-favicon");
 
@@ -31,6 +33,9 @@ app.use(
   express.static(__dirname + "/node_modules/bootstrap/dist/css")
 );
 app.use("/jsbs", express.static(__dirname + "/node_modules/bootstrap/dist/js"));
+
+// Compress all routes
+app.use(compression()); //Compress all routes
 
 // App use
 app.use(logger("dev"));
@@ -67,6 +72,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
 
 module.exports = app;

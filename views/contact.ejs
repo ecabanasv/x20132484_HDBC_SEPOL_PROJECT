@@ -7,25 +7,25 @@
 
 <body>
     <% include static/menu %>
-    <div class="container-fluid">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Contact</li>
-            </ol>
-        </nav>
-        <div class="row justify-content-center">
-            <div class="col col-auto">
-                <h3 class="h3Title">
-                    <%= page %>
-                </h3>
+        <div class="container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                </ol>
+            </nav>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <h3 class="h3Title">
+                        <%= page %>
+                    </h3>
+                </div>
             </div>
+            <br>
         </div>
-        <br>
-    </div>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col col-lg-6">
+                <div class="col col-lg-4">
                     <form>
                         <div class="form-group">
                             <label for="InputName">Name</label>
@@ -43,7 +43,12 @@
                             <label for="inputMessage">Message</label>
                             <textarea class="form-control" id="text" placeholder="Message" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                        <div class="text-center" style="margin-top: 10px;">
+                            <button type="submit" class="btn btn-secondary">Send</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -51,4 +56,5 @@
         <% include static/footer %>
 </body>
 <% include static/scripts %>
+
 </html>

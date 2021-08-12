@@ -26,7 +26,8 @@
         </div>
         <div class="container">
             <form action="/transfer-ownership" method="post">
-                <div class="row justify-content-center">
+                <div class="row justify-content-evenly show-details">
+                    
                     <div class="col col-lg-4">
                         <h4>Bike (<%= bike[3] %>)</h4>
                         <ul>
@@ -70,12 +71,13 @@
                                 id="inputNewAddress" placeholder="e.g. 0xf13da1dBd190c4A839ECB674e08cfB82eA804222"
                                 required>
                             <div class="text-center" style="margin-top: 10px;">
-                                <button type="submit" class="btn btn-secondary btn-sm">Send</button>
-                                <button type="reset" class="btn btn-warning btn-sm">Reset</button>
+                                <button type="submit" class="btn btn-secondary">Send</button>
+                                <button type="reset" class="btn btn-warning">Reset</button>
                             </div>
                         </div>
                         <input type="hidden" name="bike_id" value="<%= bike_id %>">
                     </div>
+                    <div class="col col-lg-4"></div>
                 </div>
             </form>
         </div>

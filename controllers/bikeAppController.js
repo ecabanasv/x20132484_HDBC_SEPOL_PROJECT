@@ -2,6 +2,7 @@ let jwt = require("jsonwebtoken");
 let Web3 = require("web3");
 let moment = require("moment");
 let contract = require("@truffle/contract");
+const { body, validationResult } = require("express-validator");
 
 // Provider 7545 (Ganache)
 let provider = new Web3.providers.HttpProvider("http://localhost:7545");
@@ -56,6 +57,7 @@ exports.regiter_bike_get = async function (req, res) {
       page: "Register new bike",
       menu_id: "register-bike",
       name: user_name,
+      errors: null,
     });
   } else {
     return res.render("index", {
@@ -67,30 +69,81 @@ exports.regiter_bike_get = async function (req, res) {
 };
 
 // Register bike (POST)
-exports.regiter_bike_post = async (req, res) => {
-  // Assign JWT token to token (if exist)
-  let token = req.cookies.token;
-  try {
-    if (token) {
-      user_address = jwt.verify(token, "BikeSmartContract").address;
-      const bikeContract = await BikeContract.deployed();
-      await bikeContract.newBike.sendTransaction(
-        req.body.inputMake,
-        req.body.inputModel,
-        req.body.inputFrame,
-        req.body.inputName,
-        req.body.inputEmail,
-        {
-          from: user_address,
-          gas: GAS_LIMIT,
-        }
-      );
+exports.regiter_bike_post = [
+  body("inputMake")
+    .trim()
+    .isLength({ min: 4, max: 15 })
+    .escape()
+    .withMessage("Make must be specified and less than 15 alphanumeric characters")
+    .isAlphanumeric()
+    .withMessage("Make has non-alphanumeric characters."),
+  body("inputModel")
+    .trim()
+    .isLength({ min: 4, max: 15 })
+    .escape()
+    .withMessage("Model must be specified and less than 15 alphanumeric characters")
+    .isAlphanumeric()
+    .withMessage("Model name has non-alphanumeric characters."),
+  body("inputFrame")
+    .trim()
+    .isLength({ min: 7, max: 10 })
+    .escape()
+    .withMessage("Frame must be specified also in between 7 to 10 numbers.")
+    .isNumeric()
+    .withMessage("Frame name has non-numeric characters"),
+  body("inputName")
+    .trim()
+    .isLength({ min: 2, max: 20 })
+    .escape()
+    .withMessage("Name must be specified and less than 20 characters")
+    .isAlpha()
+    .withMessage("Name has non-letters characters."),
+  body("inputEmail")
+    .trim()
+    .isLength({ min: 4, max: 50 })
+    .escape()
+    .withMessage("Email must be specified and less than 50 characters")
+    .isEmail()
+    .withMessage("Email must be valid."),
+  async (req, res) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+    // Assign JWT token to token (if exist)
+    let token = req.cookies.token;
+    user_name = jwt.verify(token, "BikeSmartContract").username;
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values and error messages.
+      res.render("register-bike", {
+        page: "Register new bike",
+        menu_id: "register-bike",
+        name: user_name,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+    try {
+      if (token) {
+        user_address = jwt.verify(token, "BikeSmartContract").address;
+        const bikeContract = await BikeContract.deployed();
+        await bikeContract.newBike.sendTransaction(
+          req.body.inputMake,
+          req.body.inputModel,
+          req.body.inputFrame,
+          req.body.inputName,
+          req.body.inputEmail,
+          {
+            from: user_address,
+            gas: GAS_LIMIT,
+          }
+        );
+      }
+    } catch (err) {
+      console.log(err);
     }
-  } catch (err) {
-    console.log(err);
   }
-  res.redirect("/management");
-};
+    res.redirect("/management");
+  },
+];
 
 // Management - General (GET)
 exports.management_get = async function (req, res) {

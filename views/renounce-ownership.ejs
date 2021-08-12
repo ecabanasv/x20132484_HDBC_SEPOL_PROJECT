@@ -23,41 +23,46 @@
                 </div>
             </div>
             <br>
-            <form action="/renounce-ownership" method="post">
-                <div class="row justify-content-center">
-                    <div class="col col-lg-3">
-                        <h4>Bike (<%= bike[3] %>)</h4>
-                        <ul>
-                            <li><span>Reg. date: </span>
-                                <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
-                            </li>
-                            <li><span>Make: </span>
-                                <%= bike[1] %>
-                            </li>
-                            <li><span>Model: </span>
-                                <%= bike[2] %>
-                            </li>
-                            <li><span>Frame: </span>
-                                <%= bike[3] %>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <br>
-                            <h5 class="renounce">Do you want to renounce bike with frame: (<%= bike[3] %>)?</h5>
-                            <input type="hidden" name="bike_id" value="<%= bike_id %>">
+            <div class="container">
+                <form action="/renounce-ownership" method="post">
+                    <div class="row justify-content-evenly show-details">
+                        <div class="col col-lg-4">
+                            <h4>Bike (<%= bike[3] %>)</h4>
+                            <ul>
+                                <li><span>Reg. date: </span>
+                                    <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
+                                </li>
+                                <li><span>Make: </span>
+                                    <%= bike[1] %>
+                                </li>
+                                <li><span>Model: </span>
+                                    <%= bike[2] %>
+                                </li>
+                                <li><span>Frame: </span>
+                                    <%= bike[3] %>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="text-center" style="margin-top: 10px;">
-                            <button type="submit" class="btn btn-danger btn-sm">Renounce</button>
-                            <a href="/management" role="button" class="btn btn-warning btn-sm">Go back</button></a>
+                        <div class="col col-lg-4">
+                            <div class="form-group">
+                                <br>
+                                <h5 class="renounce">Renounce bike with frame: (<%= bike[3] %>)?</h5>
+                                <input type="hidden" name="bike_id" value="<%= bike_id %>">
+                            </div>
+                            <div class="text-center" style="margin-top: 10px;">
+                                <button type="submit" class="btn btn-danger">Renounce</button>
+                                <a href="/management" role="button" class="btn btn-warning">Go back</button></a>
+                            </div>
                         </div>
+                        <div class="col col-lg-4"></div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+
         </div>
         <br>
         <% include static/footer %>
 </body>
 <% include static/scripts %>
+
 </html>

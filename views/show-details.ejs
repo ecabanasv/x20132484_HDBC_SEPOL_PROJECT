@@ -22,11 +22,10 @@
                     </h3>
                 </div>
             </div>
-        </div>
-        <div class="container">
             <div class="row justify-content-evenly show-details">
-                <div class="col col-lg-3">
-                    <h4>Bike (<%= bike[3] %>)</h4>
+                <div class="col col-lg-2"></div>
+                <div class="col col-lg-4">
+                    <h4>Bike details</h4>
                     <ul>
                         <li><span>Reg. date: </span>
                             <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
@@ -51,7 +50,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col col-lg-5 d-none d-sm-block">
+                <div class="col col-lg-4 d-none d-sm-block">
                     <div>
                         <h4>Historic details <span class="span-add-details">(<a
                                     href="/add-details?bike_id=<%= bike_id %>">Add new</a>)</span></h4>
@@ -69,8 +68,8 @@
                             <p>No details added yet</p>
                             <% } %>
                 </div>
+                <div class="col col-lg-2"></div>
             </div>
-        </div>
         <br>
         </div>
         <br>

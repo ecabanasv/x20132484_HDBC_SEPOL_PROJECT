@@ -160,10 +160,10 @@ contract("BikeContract", function (accounts) {
       await instance.addDetails(1, "Detail 1", { from: accounts[0] });
       await instance.addDetails(2, "Detail 2", { from: accounts[0] });
       const detailsList = await instance.showAllDetails();
-    //Bike 1: 1
-    assert.equal(detailsList[0][0], 1);
-    //Bike 2: Detail 2
-    assert.equal(detailsList[1][2], "Detail 2");
+      //Bike 1: 1
+      assert.equal(detailsList[0][0], 1);
+      //Bike 2: Detail 2
+      assert.equal(detailsList[1][2], "Detail 2");
     });
     /* addDetails */
     it("it should add details for an specific bike", async () => {
@@ -206,6 +206,97 @@ contract("BikeContract", function (accounts) {
       assert.equal(
         bikeList[1][5],
         "0x0000000000000000000000000000000000000000"
+      );
+    });
+  });
+
+  describe("@ Modifiers: emptyBikeString", () => {
+    /* Make */
+    it("it should test empty Make field", async () => {
+      const instance = await BikeContract.deployed();
+      await truffleAssert.fails(
+        instance.newBike(
+          "",
+          "Model_01",
+          "Frame_no_01",
+          "Name_01",
+          "email_01@email.com",
+          { from: accounts[0] }
+        ),
+        truffleAssert.ErrorType.REVERT,
+        "(Make): Must not be empty."
+      );
+    });
+    /* Model */
+    it("it should test empty Model field", async () => {
+      const instance = await BikeContract.deployed();
+      await truffleAssert.fails(
+        instance.newBike(
+          "Make_01",
+          "",
+          "Frame_no_01",
+          "Name_01",
+          "email_01@email.com",
+          { from: accounts[0] }
+        ),
+        truffleAssert.ErrorType.REVERT,
+        "(Model): Must not be empty."
+      );
+    });
+    /* Frame */
+    it("it should test empty Frame field", async () => {
+      const instance = await BikeContract.deployed();
+      await truffleAssert.fails(
+        instance.newBike(
+          "Make_01",
+          "Model_01",
+          "",
+          "Name_01",
+          "email_01@email.com",
+          { from: accounts[0] }
+        ),
+        truffleAssert.ErrorType.REVERT,
+        "(Frame): Must not be empty."
+      );
+    });
+  });
+  describe("@ Modifiers: emptyOwnerString", () => {
+    /* Name */
+    it("it should test empty Name field", async () => {
+      const instance = await BikeContract.deployed();
+      await truffleAssert.fails(
+        instance.newBike(
+          "Make_01",
+          "Model_01",
+          "Frame_no_01",
+          "",
+          "email_01@email.com",
+          { from: accounts[0] }
+        ),
+        truffleAssert.ErrorType.REVERT,
+        "(Name): Must not be empty."
+      );
+    });
+    /* Email */
+    it("it should test empty Email field", async () => {
+      const instance = await BikeContract.deployed();
+      await truffleAssert.fails(
+        instance.newBike("Make_01", "Model_01", "Frame_no_01", "Name_01", "", {
+          from: accounts[0],
+        }),
+        truffleAssert.ErrorType.REVERT,
+        "(Email): Must not be empty."
+      );
+    });
+  });
+  describe("@ Modifiers: emptyDetailsString", () => {
+    /* Details */
+    it("it should test empty Details field", async () => {
+      const instance = await BikeContract.deployed();
+      await truffleAssert.fails(
+        instance.addDetails(1, "", { from: accounts[0] }),
+        truffleAssert.ErrorType.REVERT,
+        "(Details): Must not be empty."
       );
     });
   });

@@ -23,44 +23,48 @@
                 </div>
             </div>
             <br>
-            <form action="/add-details" method="post">
-                <div class="row justify-content-center">
-                    <div class="col col-md-3">
-                        <h4>Bike (<%= bike[3] %>)</h4>
-                        <ul>
-                            <li><span>Reg. date: </span>
-                                <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
-                            </li>
-                            <li><span>Make: </span>
-                                <%= bike[1] %>
-                            </li>
-                            <li><span>Model: </span>
-                                <%= bike[2] %>
-                            </li>
-                            <li><span>Frame: </span>
-                                <%= bike[3] %>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col col-sm-4">
-                        <div class="form-group">
-                            <label class="lblInput" for="inputDetails">Add information in the textbox below:</label>
-                            <textarea type="textbox" class="input-style form-control" name="inputDetails"
-                                id="inputDetails" placeholder="e.g. Brakes replaced in shop XXX on 25/03/2021"
-                                rows="4" minlength="10" maxlength="180" required></textarea>
-                            <input type="hidden" name="bike_id" value="<%= bike_id %>">
-                            <div class="text-center" style="margin-top: 10px;">
-                                <button type="submit" class="btn btn-secondary btn-sm">Send</button>
-                                <button type="reset" class="btn btn-warning btn-sm">Reset</button>
+            <div class="container">
+                <form action="/add-details" method="post">
+                    <div class="row justify-content-evenly show-details">
+                        <div class="col col-md-4">
+                            <h4>Bike details</h4>
+                            <ul>
+                                <li><span>Reg. date: </span>
+                                    <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
+                                </li>
+                                <li><span>Make: </span>
+                                    <%= bike[1] %>
+                                </li>
+                                <li><span>Model: </span>
+                                    <%= bike[2] %>
+                                </li>
+                                <li><span>Frame: </span>
+                                    <%= bike[3] %>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col col-sm-4">
+                            <div class="form-group">
+                                <label class="lblInput" for="inputDetails">Add information in the textbox below:</label>
+                                <textarea type="textbox" class="input-style form-control" name="inputDetails"
+                                    id="inputDetails" placeholder="e.g. Brakes replaced in shop XXX on 25/03/2021"
+                                    rows="4" minlength="10" maxlength="180" required></textarea>
+                                <input type="hidden" name="bike_id" value="<%= bike_id %>">
+                                <div class="text-center" style="margin-top: 10px;">
+                                    <button type="submit" class="btn btn-secondary">Send</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                </div>
                             </div>
                         </div>
+                        <div class="col col-lg-4"></div>
                     </div>
-                </div>
-                <br>
-            </form>
+                    <br>
+                </form>
+            </div>
         </div>
         <br>
         <% include static/footer %>
 </body>
 <% include static/scripts %>
+
 </html>

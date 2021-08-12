@@ -22,48 +22,57 @@
                 </div>
             </div>
             <br>
-        </div>
-        <div class="container">
+
             <form action="/register-bike" method="post">
-                <div class="row">
-                    <div class="col col-md-4 offset-md-6">
+                <div class="row justify-content-evenly">
+                    <div class="col-4 col-md-3 d-none d-lg-block">
+                        <img src="images/bike-l.png" class="imgBike img-fluid">
+                    </div>
+                    <div class="col-12 col-md-3 d-lg-block">
                         <h5 class="h5Title">Bike details</h5>
+
                         <div class="form-group">
                             <label class="lblInput" for="inputMake">Make:</label>
-                            <input type="text" class="input-style form-control" name="inputMake" id="inputMake"
-                                placeholder="Make..." minlength="4" maxlength="20" required>
+                            <input type="text" class="input-register form-control" name="inputMake" id="inputMake"
+                                placeholder="Make..." minlength="4" maxlength="15" required>
                         </div>
                         <div class="form-group">
                             <label class="lblInput" for="inputModel">Model:</label>
-                            <input type="text" class="input-style form-control" name="inputModel" id="inputModel"
-                                placeholder="Model..." minlength="4" maxlength="20" required>
+                            <input type="text" class="input-register form-control" name="inputModel" id="inputModel"
+                                placeholder="Model..." minlength="4" maxlength="15" required>
                         </div>
                         <div class="form-group">
                             <label class="lblInput" for="inputFrame">Frame No.:</label>
-                            <input type="text" class="input-style form-control" name="inputFrame" id="inputFrame"
+                            <input type="text" class="input-register form-control" name="inputFrame" id="inputFrame"
                                 placeholder="Frame No." minlength="7" maxlength="10" required>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col col-md-4 offset-md-6">
                         <h5 class="h5Title">Owner details</h5>
                         <div class="form-group">
                             <label class="lblInput" for="inputName">Name:</label>
-                            <input type="text" class="input-style form-control" name="inputName" id="inputName"
+                            <input type="text" class="input-register form-control" name="inputName" id="inputName"
                                 placeholder="Name..." minlength="2" maxlength="20" required>
                         </div>
                         <div class="form-group">
                             <label class="lblInput" for="inputEmail">Email:</label>
-                            <input type="email" class="input-style form-control" name="inputEmail" id="inputEmail"
+                            <input type="email" class="input-register form-control" name="inputEmail" id="inputEmail"
                                 placeholder="Email..." maxlength="50" required>
                         </div>
                         <div class="row justify-content-center">
                             <div class="text-center" style="margin-top: 10px;">
-                                <button type="submit" class="btn btn-secondary btn-sm">Send</button>
-                                <button type="reset" class="btn btn-warning btn-sm">Reset</button>
+                                <button type="submit" class="btn btn-secondary">Send</button>
+                                <button type="reset" class="btn btn-warning">Reset</button>
                             </div>
                         </div>
+                        <br>
+                    </div>
+                    <div class="col-12 col-md-3 align-self-center">
+                        <ul>
+                            <% if (errors!=null) { for(var i=0; i < errors.length; i++) { %>
+                                <li class="text-danger">
+                                    <%= errors[i].msg %>
+                                </li>
+                                <% }}; %>
+                        </ul>
                     </div>
                 </div>
                 <br>
