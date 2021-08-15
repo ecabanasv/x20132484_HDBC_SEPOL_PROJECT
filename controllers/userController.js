@@ -42,16 +42,16 @@ exports.user_login_post = async function (req, res) {
         });
         return;
       } else {
-        
         // If user try to login with an different account that not belong to his Metamask address
         // It will be send it to home page again
-        console.log("1");
-        console.log("user.address: "+user.address);
-        console.log("req.body.currentMetaAcc: "+req.body.currentMetaAcc);
         if (user.address != req.body.currentMetaAcc) {
-          return res.redirect("/logout");
+          return res.render("login", {
+            page: "Login",
+            menu_id: "login",
+            name: null,
+            error: "Invalid Metamask account",
+          });
         }
-        console.log("2");
 
         // Compare hashed password in MongoDB with inputPassword in form
         if (!user || !user.comparePassword(req.body.inputPassword)) {
@@ -94,7 +94,7 @@ exports.user_signup_get = async function (req, res) {
     res.render("index", { page: "Home", menu_id: "home", name: user_name });
   } else {
     return res.render("signup", {
-      page: "Sign-up",
+      page: "Sign-Up",
       menu_id: "signup",
       name: null,
       error: null,

@@ -8,9 +8,25 @@
 <body>
   <% include static/menu %>
     <div class="bgBike container-fluid">
-      <img class="img-fluid" src="images/bike-2.jpg" alt="Background">
+      <% include static/messages %>
+      <div class="smWelcome d-block d-sm-none">
+        <h2 class="h2Index">Welcome to Bike Smart Contract
+        </h2>
+        <% if (name===null) { %>
+        <a class="btn btn-outline-dark btn-sm" role="button" href="/signup">Sign-up</a>
+        <a class="btn btn-outline-dark btn-sm" role="button" href="/login">Login</a>
+        <br>
+        <img src="images/bike-l.png" class="imgBikeWelcome img-fluid">
+        <% } else { %>
+          <a class="btn btn-outline-dark btn-sm" role="button" href="/register-bike">Register bike</a>
+          <a class="btn btn-outline-dark btn-sm" role="button" href="/management">Management</a>
+          <br>
+          <img src="images/bike-l.png" class="imgBikeWelcome img-fluid">
+        <% } %>
+      </div>
+      <img class="img-fluid d-none d-sm-block" src="images/bike-2.jpg" alt="Background">
     </div>
-    <% include static/footer %>
+  <% include static/footer %>
 </body>
 <% include static/scripts %>
 

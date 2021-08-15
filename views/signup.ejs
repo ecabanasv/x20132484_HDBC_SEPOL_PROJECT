@@ -11,48 +11,50 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Signup</li>
+                    <li class="breadcrumb-item active" aria-current="page">Sign-Up</li>
                 </ol>
             </nav>
             <div class="row justify-content-center">
                 <div class="col col-auto">
-                <h2 class="hTitle">
-                  <%= page %>
-                </h2>
-                <% if (error!=null) { %>
-                    <div class="error"><%= error %></div>
-                <% } %>
+                    <h3 class="h3Title">
+                        <%= page %>
+                    </h3>
+                    <% if (error!=null) { %>
+                        <div class="error">
+                            <%= error %>
+                        </div>
+                        <% } %>
                 </div>
-              </div>
-              <br>
-            <div class="row">
-                <form action="/signup" method="post">
-                    <div class="col-md-3 offset-md-5">
-                        <div class="form-group col-md-8">
-                            <label class="lblInput" for="inputUsername">Username</label>
-                            <input type="text" class="inputField form-control" name="inputUsername" id="inputUsername"
-                                placeholder="Username" minlength="4" maxlength="15" required>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col col-lg-2 box-details">
+                        <form action="/signup" method="post">
+                            <div class="form-group">
+                                <label class="lblInput" for="inputUsername">Username</label>
+                                <input type="text" class="input-form form-control" name="inputUsername"
+                                    id="inputUsername" placeholder="Username" minlength="4" maxlength="15" required>
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label class="lblInput" for="inputPassword">Password</label>
+                                <input type="password" class="input-form form-control" name="inputPassword"
+                                    id="inputPassword" placeholder="Password" minlength="4" maxlength="15" required>
+                                <input type="hidden" name="currentMetaAcc" id="currentMetaAcc">
+                            </div>
+                            <div class="form-group">
+                                <label class="lblInput" for="inputRepeatPassword">Repeat Password</label>
+                                <input type="password" class="input-form form-control" name="inputRepeatPassword"
+                                    id="inputRepeatPassword" placeholder="Password" minlength="4" maxlength="15"
+                                    required>
+                            </div>
                             <br>
-                        </div>
-                        <div class="form-group col-md-8">
-                            <label class="lblInput" for="inputPassword">Password</label>
-                            <input type="password" class="inputField form-control" name="inputPassword" id="inputPassword"
-                                placeholder="Password" minlength="4" maxlength="15" required>
-                            <input type="hidden" name="currentMetaAcc" id="currentMetaAcc">
-                        </div>
-                        <div class="form-group col-md-8">
-                            <label class="lblInput" for="inputRepeatPassword">Repeat Password</label>
-                            <input type="password" class="inputField form-control" name="inputRepeatPassword" id="inputRepeatPassword"
-                                placeholder="Password" minlength="4" maxlength="15" required>
-                        </div>
+                            <button type="submit" class="btn btn-secondary btn-sm">Signup</button>
+                            <button type="reset" class="btn btn-warning btn-sm">Reset</button>
+                        </form>
                     </div>
-                    <br>
-                    <button type="submit" class="btn btn-secondary btn-sm">Signup</button>
-                    <button type="reset" class="btn btn-warning btn-sm">Reset</button>
-                </form>
+                </div>
             </div>
-        </div>
-        <% include static/footer %>
+            <% include static/footer %>
 </body>
 <% include static/scripts %>
     <script>

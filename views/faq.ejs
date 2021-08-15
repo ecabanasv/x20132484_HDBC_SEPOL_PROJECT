@@ -2,17 +2,107 @@
 <html>
 
 <head>
-    <% include static/header %>
+  <% include static/header %>
 </head>
 
 <body>
-    <% include static/menu %>
-        <div class="container-fluid">
-            <h2 class="hTitle">
-                <%= page %>
-            </h2>
+  <% include static/menu %>
+    <div class="container-fluid">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+        </ol>
+      </nav>
+      <h2 class="h2Title">
+        <%= page %>
+      </h2>
+      <br><br>
+      <div class="row justify-content-center">
+        <div class="col-4 col-md-3 d-none d-lg-block"></div>
+        <div class="col-12 col-md-6">
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  How to use Bike Smart Contract site?
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <h4>Metamask</h4>
+                  <p>It is necessary to have a Metamask account to be able to register on this website. Download the
+                    Metamask extension corresponding to your browser through the web <a class="link-dark"
+                      href="https://metamask.io/" target="_blank">https://metamask.io/</a>.</p>
+
+                  <h4>Ganache</h4>
+
+                  <p>It is necessary to use Ganache (port 7545) to recreate the local Blockchain accounts linked with
+                    the Metamask account. From this link <a class="link-dark"
+                      href="https://www.trufflesuite.com/ganache"
+                      target="_blank">https://www.trufflesuite.com/ganache</a>; you can download
+                    the application corresponding to your OS. Once downloaded, link one of the 10 Ganache accounts to
+                    your Metamask account (<a class="link-dark"
+                      href="https://www.trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask"
+                      target="_blank">more info</a> in "Setting up MetaMask" section).</p>
+
+                  <h4>Register</h4>
+
+                  <p>To use the functions of the web application it is necessary to register as a web user through <a
+                      href="/signup" class="link-dark">sign-up</a> form. (You must be sure that your Metamask account is
+                    connected).</p>
+
+
+                  <h4>Login</h4>
+
+                  <p>Once registered as a user, you must log in through the <a href="/login" class="link-dark">login</a>
+                    form (You must be sure that your Metamask account is connected).</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  How to register a new bike?
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <p>To register your bike data, you must go to the "<a href="/register-bike">Register Bike</a>" form. To access the form, you must <a href="/login">log in</a> with your registered user.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  How to manage bike records?
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <p>In the "<a href="/management">Management</a>" application section, you will access the different functions for managing your bicycle. The functions are as follows: </p>
+                  <ul>
+                    <li><strong>Show Details:</strong> It is used to view the information of the bicycle and the notes associated with it. The screen shows the details of the bicycle (Registration date, Make, Model and Frame no.) And its owner (name and email). On the right side, it shows the notes associated with the bike.</li>
+                    <li><strong>Add details:</strong> Its usefulness is to add details or notes about the registered bicycle. The display shows the details of the bike (Registration date, Make, Model and Frame no.) And a form to add details or notes about the bike.</li>
+                    <li><strong>Transfer ownership:</strong> Option to transfer ownership of the bike to another user. The screen shows the details of the bicycle (Registration date, Make, Model and Frame no.) And its owner (name and email) along with a form to enter the new owner's data (name, email and account address) .</li>
+                    <li><strong>Renounce ownership:</strong> Displays the bike details (Registration date, Make, Model and Frame no.) And the option to renounce ownership of the bike.</li>
+                  </ul> 
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <% include static/footer %>
+        <div class="col-4 col-md-3 d-none d-lg-block"></div>
+      </div>
+      <br><br>
+
+      <% include static/footer %>
 </body>
 <% include static/scripts %>
 

@@ -22,45 +22,56 @@
                     </h3>
                 </div>
             </div>
+
             <div class="row justify-content-evenly show-details">
-                <div class="col col-lg-2"></div>
-                <div class="col col-lg-4">
-                    <h4>Bike details</h4>
-                    <ul>
-                        <li><span>Reg. date: </span>
-                            <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
-                        </li>
-                        <li><span>Make: </span>
-                            <%= bike[1] %>
-                        </li>
-                        <li><span>Model: </span>
-                            <%= bike[2] %>
-                        </li>
-                        <li><span>Frame: </span>
-                            <%= bike[3] %>
-                        </li>
-                    </ul>
-                    <h4>Current Owner</h4>
-                    <ul>
-                        <li><span>Name: </span>
-                            <%= owner[0] %>
-                        </li>
-                        <li><span>Email: </span>
-                            <%= owner[1] %>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col col-lg-4 d-none d-sm-block">
+                <div class="col-12 col-lg-2">
                     <div>
-                        <h4>Historic details <span class="span-add-details">(<a
-                                    href="/add-details?bike_id=<%= bike_id %>">Add new</a>)</span></h4>
+                        <h4>BIKE DETAILS</h4>
+                        <hr>
+                        <h5>REG. DATE</h5>
+                        <p>
+                            <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
+                        </p>
+                        <h5>MAKE</h5>
+                        <p>
+                            <%= bike[1] %>
+                        </p>
+                        <h5>MODEL</h5>
+                        <p>
+                            <%= bike[2] %>
+                        </p>
+                        <h5>FRAME</h5>
+                        <p>
+                            <%= bike[3] %>
+                        </p>
+                        <hr>
+                        <h4>OWNER</h4>
+                        <hr>
+                        <h5>NAME</h5>
+                        <p>
+                            <%= owner[0] %>
+                        </p>
+                        <h5>EMAIL</h5>
+                        <p>
+                            <%= owner[1] %>
+                        </p>
                     </div>
+                </div>
+                <div class="col-md-3 d-none d-lg-block">
+                    <img src="images/bike-l.png" class="img-fluid" style="width: auto; opacity: 0.1;">
+                </div>
+                <div class="col-12 col-lg-6">
+
+                    <h4>Historic details <span class="span-add-details">(<a
+                                href="/add-details?bike_id=<%= bike_id %>">Add new</a>)</span></h4>
 
                     <% if (details.length !=0) { %>
                         <ul>
                             <% for(var i=0; i < details.length; i++) { %>
                                 <li>
-                                    <%= moment.unix(details[i][1]).format('DD/MM/YYYY') %> - <%= details[i][2] %>
+                                    <small>
+                                        <%= moment.unix(details[i][1]).format('DD/MM/YYYY') %> - <%= details[i][2] %>
+                                    </small>
                                 </li>
                                 <% } %>
                         </ul>
@@ -68,12 +79,11 @@
                             <p>No details added yet</p>
                             <% } %>
                 </div>
-                <div class="col col-lg-2"></div>
             </div>
-        <br>
         </div>
         <br>
-        <% include static/footer %>
+        <br>
+    <% include static/footer %>
 </body>
 <% include static/scripts %>
 

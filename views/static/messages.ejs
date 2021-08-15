@@ -1,0 +1,15 @@
+<div>
+    <% if (name===null) { %>
+        <div class="alert alert-warning text-center"
+            style="padding: 0; margin-bottom: 0px; border-bottom: 1px solid black;" role="alert">
+            Please, <a class="link-dark" href="/signup">sign-up</a> and
+            <a class="link-dark" href="/login">login</a> with your username/password.
+        </div>
+        <% } %>
+            <% if (email==1) { %>
+                <div class="alert alert-success text-center"
+                    style="padding: 0; margin-bottom: 0px; border-bottom: 1px solid black;" role="alert">
+                    Email sent to Bike Smart Contract administrator
+                </div>
+                <% } %>
+</div>

@@ -20,11 +20,12 @@
                         <%= page %>
                     </h2>
                     <div class="btnAddBike">
-                        <a class="btn btn-light btn-sm" href="/register-bike" role="button">Register new bike</a>
+                        <a class="btn btn-outline-dark btn-sm" href="/register-bike" role="button">Register new bike</a>
                     </div>
                 </div>
             </div>
             <br>
+            <% if (bikes.length > 0) { %>
             <div class="row justify-content-center">
                 <table class="mng-table table table-sm table-striped table-hover w-75">
                     <thead>
@@ -94,6 +95,7 @@
                     </tbody>
                 </table>
             </div>
+        <% } %>
         </div>
         <br><br>
         <% include static/footer %>

@@ -8,12 +8,12 @@
 <body>
     <% include static/menu %>
         <div class="container-fluid">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Register new bike</li>
-                </ol>
-            </nav>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Register bike</li>
+                    </ol>
+                </nav>
             <div class="row justify-content-center">
                 <div class="col col-auto">
                     <h3 class="h3Title">
@@ -24,8 +24,8 @@
             <br>
 
             <form action="/register-bike" method="post">
-                <div class="row justify-content-evenly">
-                    <div class="col-4 col-md-3 d-none d-lg-block">
+                <div class="row justify-content-center">
+                    <div class="col-4 col-md-3 d-none d-lg-block align-self-center">
                         <img src="images/bike-l.png" class="imgBike img-fluid">
                     </div>
                     <div class="col-12 col-md-3 d-lg-block">
@@ -33,40 +33,40 @@
 
                         <div class="form-group">
                             <label class="lblInput" for="inputMake">Make:</label>
-                            <input type="text" class="input-register form-control" name="inputMake" id="inputMake"
+                            <input type="text" class="input-form form-control" name="inputMake" id="inputMake"
                                 placeholder="Make..." minlength="4" maxlength="15" required>
                         </div>
                         <div class="form-group">
                             <label class="lblInput" for="inputModel">Model:</label>
-                            <input type="text" class="input-register form-control" name="inputModel" id="inputModel"
+                            <input type="text" class="input-form form-control" name="inputModel" id="inputModel"
                                 placeholder="Model..." minlength="4" maxlength="15" required>
                         </div>
                         <div class="form-group">
                             <label class="lblInput" for="inputFrame">Frame No.:</label>
-                            <input type="text" class="input-register form-control" name="inputFrame" id="inputFrame"
+                            <input type="text" class="input-form form-control" name="inputFrame" id="inputFrame"
                                 placeholder="Frame No." minlength="7" maxlength="10" required>
                         </div>
                         <h5 class="h5Title">Owner details</h5>
                         <div class="form-group">
                             <label class="lblInput" for="inputName">Name:</label>
-                            <input type="text" class="input-register form-control" name="inputName" id="inputName"
+                            <input type="text" class="input-form form-control" name="inputName" id="inputName"
                                 placeholder="Name..." minlength="2" maxlength="20" required>
                         </div>
                         <div class="form-group">
                             <label class="lblInput" for="inputEmail">Email:</label>
-                            <input type="email" class="input-register form-control" name="inputEmail" id="inputEmail"
+                            <input type="email" class="input-form form-control" name="inputEmail" id="inputEmail"
                                 placeholder="Email..." maxlength="50" required>
                         </div>
                         <div class="row justify-content-center">
                             <div class="text-center" style="margin-top: 10px;">
-                                <button type="submit" class="btn btn-secondary">Send</button>
+                                <button type="submit" class="btn btn-secondary">Register</button>
                                 <button type="reset" class="btn btn-warning">Reset</button>
                             </div>
                         </div>
                         <br>
                     </div>
                     <div class="col-12 col-md-3 align-self-center">
-                        <ul>
+                        <ul class="errorList">
                             <% if (errors!=null) { for(var i=0; i < errors.length; i++) { %>
                                 <li class="text-danger">
                                     <%= errors[i].msg %>

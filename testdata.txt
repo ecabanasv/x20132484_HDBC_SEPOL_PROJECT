@@ -1,0 +1,45 @@
+# Step 1
+
+npx truffle console --network development
+
+# Step 2
+
+let app = await BikeContract.deployed()
+
+# Step 3 (Add bikes & owners) Copy & paste all brick below in the command line & press enter.
+
+await app.newBike("Make_01", "Model_01", "Frame_no_01", "Name_01", "email_01@email.com", {from: accounts[0]});
+await app.newBike("Make_02", "Model_02", "Frame_no_02", "Name_02", "email_02@email.com", {from: accounts[0]});
+await app.newBike("Make_03", "Model_03", "Frame_no_03", "Name_03", "email_03@email.com", {from: accounts[0]});
+await app.newBike("Make_04", "Model_04", "Frame_no_04", "Name_04", "email_04@email.com", {from: accounts[0]});
+await app.newBike("Make_05", "Model_05", "Frame_no_05", "Name_05", "email_05@email.com", {from: accounts[0]});
+await app.newBike("Make_06", "Model_06", "Frame_no_06", "Name_06", "email_06@email.com", {from: accounts[0]});
+await app.newBike("Make_07", "Model_07", "Frame_no_07", "Name_07", "email_07@email.com", {from: accounts[0]});
+await app.newBike("Make_08", "Model_08", "Frame_no_08", "Name_08", "email_08@email.com", {from: accounts[0]});
+await app.newBike("Make_09", "Model_09", "Frame_no_09", "Name_09", "email_09@email.com", {from: accounts[0]});
+await app.newBike("Make_10", "Model_10", "Frame_no_10", "Name_10", "email_10@email.com", {from: accounts[0]});
+await app.newBike("Make_01", "Model_01", "Frame_no_01", "Name_01", "email_11@email.com", {from: accounts[1]});
+await app.newBike("Make_02", "Model_02", "Frame_no_02", "Name_02", "email_12@email.com", {from: accounts[1]});
+await app.newBike("Make_03", "Model_03", "Frame_no_03", "Name_03", "email_13@email.com", {from: accounts[1]});
+await app.newBike("Make_04", "Model_04", "Frame_no_04", "Name_04", "email_14@email.com", {from: accounts[1]});
+await app.newBike("Make_05", "Model_05", "Frame_no_05", "Name_05", "email_15@email.com", {from: accounts[1]});
+await app.newBike("Make_06", "Model_06", "Frame_no_06", "Name_06", "email_16@email.com", {from: accounts[1]});
+await app.newBike("Make_07", "Model_07", "Frame_no_07", "Name_07", "email_17@email.com", {from: accounts[1]});
+await app.newBike("Make_08", "Model_08", "Frame_no_08", "Name_08", "email_18@email.com", {from: accounts[1]});
+await app.newBike("Make_09", "Model_09", "Frame_no_09", "Name_09", "email_19@email.com", {from: accounts[1]});
+await app.newBike("Make_10", "Model_10", "Frame_no_10", "Name_10", "email_20@email.com", {from: accounts[1]})
+
+# Step 4 (Add bike notes) Copy & paste all brick below in the command line & press enter.
+
+await app.addDetails(0, "Detail 1", {from: accounts[0]});
+await app.addDetails(0, "Detail 2", {from: accounts[0]});
+await app.addDetails(0, "Detail 3", {from: accounts[0]});
+await app.addDetails(0, "Detail 4", {from: accounts[0]});
+await app.addDetails(10, "Detail 1", {from: accounts[1]});
+await app.addDetails(10, "Detail 2", {from: accounts[1]});
+await app.addDetails(10, "Detail 3", {from: accounts[1]});
+await app.addDetails(10, "Detail 4", {from: accounts[1]});
+
+# Important
+
+Link account[0] & account[1] of your Ganache client with your Metamask account (port 7545)

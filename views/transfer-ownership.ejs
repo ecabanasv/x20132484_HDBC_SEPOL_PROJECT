@@ -23,38 +23,46 @@
                 </div>
             </div>
             <br>
-        </div>
-        <div class="container">
-            <form action="/transfer-ownership" method="post">
-                <div class="row justify-content-evenly show-details">
-                    
-                    <div class="col col-lg-4">
-                        <h4>Bike (<%= bike[3] %>)</h4>
-                        <ul>
-                            <li><span>Reg. date: </span>
-                                <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
-                            </li>
-                            <li><span>Make: </span>
-                                <%= bike[1] %>
-                            </li>
-                            <li><span>Model: </span>
-                                <%= bike[2] %>
-                            </li>
-                            <li><span>Frame: </span>
-                                <%= bike[3] %>
-                            </li>
-                        </ul>
-                        <h4>Owner info</h4>
-                        <ul>
-                            <li><span>Name: </span>
-                                <%= owner[0] %>
-                            </li>
-                            <li><span>Email: </span>
-                                <%= owner[1] %>
-                            </li>
-                        </ul>
+            <div class="row justify-content-evenly">
+                <div class="col-12 col-lg-2 d-none d-lg-block">
+                    <div>
+                        <h4>BIKE DETAILS</h4>
+                        <hr>
+                        <h5>REG. DATE</h5>
+                        <p>
+                            <%= moment.unix(bike[0]).format('DD/MM/YYYY') %>
+                        </p>
+                        <h5>MAKE</h5>
+                        <p>
+                            <%= bike[1] %>
+                        </p>
+                        <h5>MODEL</h5>
+                        <p>
+                            <%= bike[2] %>
+                        </p>
+                        <h5>FRAME</h5>
+                        <p>
+                            <%= bike[3] %>
+                        </p>
+                        <hr>
+                        <h4>OWNER</h4>
+                        <hr>
+                        <h5>NAME</h5>
+                        <p>
+                            <%= owner[0] %>
+                        </p>
+                        <h5>EMAIL</h5>
+                        <p>
+                            <%= owner[1] %>
+                        </p>
                     </div>
-                    <div class="col col-lg-4">
+                </div>
+                <div class="col-md-2 d-none d-lg-block">
+                    <img src="images/transfer.png" class="img-fluid" style="width: auto; opacity: 0.1;">
+                </div>
+                <div class="col-12 col-lg-4">
+                    <h5>Fill the form below to transfer ownership:</h5>
+                    <form action="/transfer-ownership" method="post">
                         <div class="form-group">
                             <label class="lblInput" for="inputName">New Name:</label>
                             <input type="text" class="input-style form-control" name="inputName" id="inputName"
@@ -69,17 +77,26 @@
                             <label class="lblInput" for="inputNewAddress">New Address:</label>
                             <input type="text" class="input-style form-control" name="inputNewAddress"
                                 id="inputNewAddress" placeholder="e.g. 0xf13da1dBd190c4A839ECB674e08cfB82eA804222"
-                                required>
-                            <div class="text-center" style="margin-top: 10px;">
-                                <button type="submit" class="btn btn-secondary">Send</button>
+                                minlength="42" maxlength="42" required>
+                            <div class="text-center" style="margin-top: 20px;">
+                                <button type="submit" class="btn btn-secondary">Transfer</button>
                                 <button type="reset" class="btn btn-warning">Reset</button>
                             </div>
                         </div>
                         <input type="hidden" name="bike_id" value="<%= bike_id %>">
-                    </div>
-                    <div class="col col-lg-4"></div>
+                    </form>
                 </div>
-            </form>
+                <div class="col-12 col-md-2">
+                    <ul>
+                        <% if (errors!=null) { for(var i=0; i < errors.length; i++) { %>
+                            <li class="text-danger">
+                                <%= errors[i].msg %>
+                            </li>
+                            <% }}; %>
+                    </ul>
+                </div>
+            </div>
+            <br><br>
         </div>
         <% include static/footer %>
 </body>

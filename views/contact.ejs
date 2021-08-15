@@ -22,26 +22,32 @@
                 </div>
             </div>
             <br>
-        </div>
-        <div class="container">
             <div class="row justify-content-center">
-                <div class="col col-lg-4">
-                    <form>
+                <div class="col-4 col-md-3 d-none d-lg-block align-self-center">
+                    <img src="images/contact.png" class="imgAt img-fluid">
+                </div>
+                <div class="col-12 col-lg-3">
+                    <h6>Use the following form to contact the administrator:</h6>
+                    <form action="/contact" method="post">
                         <div class="form-group">
                             <label for="InputName">Name</label>
-                            <input type="text" class="form-control" id="inputName" placeholder="Name" required>
+                            <input type="text" class="input-form form-control" id="inputName" name="inputName" placeholder="Name" minlength="2" maxlength="20"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">Email address</label>
-                            <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" required>
+                            <input type="email" class="input-form form-control" id="inputEmail" name="inputEmail"
+                                placeholder="Enter email" minlength="4" maxlength="50" required>
                         </div>
                         <div class="form-group">
                             <label for="inputSubject">Subject</label>
-                            <input type="text" class="form-control" id="inputSubject" placeholder="Subject" required>
+                            <input type="text" class="input-form form-control" id="inputSubject" name="inputSubject"
+                                placeholder="Subject" minlength="10" maxlength="50" required>
                         </div>
                         <div class="form-group">
                             <label for="inputMessage">Message</label>
-                            <textarea class="form-control" id="text" placeholder="Message" required></textarea>
+                            <textarea class="form-control" id="text" placeholder="Message" name="inputMessage" rows="4"
+                                minlength="50" maxlength="300" required></textarea>
                         </div>
 
                         <div class="text-center" style="margin-top: 10px;">
@@ -51,7 +57,17 @@
 
                     </form>
                 </div>
+                <div class="col-12 col-md-3 align-self-center">
+                    <ul class="errorList">
+                        <% if (errors!=null) { for(var i=0; i < errors.length; i++) { %>
+                            <li class="text-danger">
+                                <%= errors[i].msg %>
+                            </li>
+                            <% }}; %>
+                    </ul>
+                </div>
             </div>
+            <br><br>
         </div>
         <% include static/footer %>
 </body>
