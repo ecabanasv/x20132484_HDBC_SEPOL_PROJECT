@@ -107,4 +107,13 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
+    <script>
+        window.ethereum.on('accountsChanged', function (accounts) {
+            window.location = "/logout";
+        })
+    
+        window.ethereum.on('chainChanged', function (chainId) {
+            window.location = "/logout";
+        })
+    </script>
 </html>

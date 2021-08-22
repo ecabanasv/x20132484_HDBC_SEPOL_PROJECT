@@ -30,7 +30,7 @@ contract("BikeContract", function (accounts) {
       });
     });
   });
-  describe("@ Bike and owner listing", () => {
+  describe("@ Bike listing", () => {
     /* showListBikeDetails */
     it("it should show the list of bikes registered", async () => {
       const instance = await BikeContract.deployed();
@@ -135,7 +135,7 @@ contract("BikeContract", function (accounts) {
     });
   });
 
-  describe("@ Owner functions", () => {
+  describe("@ Owner listing", () => {
     /* showOwnerDetails */
     it("it should show a specific owner registered", async () => {
       const instance = await BikeContract.deployed();
@@ -161,7 +161,7 @@ contract("BikeContract", function (accounts) {
       assert.equal(detailsList[1][2], "Detail 2");
     });
     /* addDetails */
-    it("it should add details for an specific bike", async () => {
+    it("it should add details for a specific bike", async () => {
       const bike_id = 1;
       const detail_string = "Replaced brakes";
       const instance = await BikeContract.deployed();

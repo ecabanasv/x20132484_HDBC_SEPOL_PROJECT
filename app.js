@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // DB Connection
 mongoose
-  .connect(process.env.MONGODB_ATLAS_URI, {
+  .connect("mongodb+srv://admin:x20132484@db.6xcjk.mongodb.net/DB?retryWrites=true&w=majority", {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,

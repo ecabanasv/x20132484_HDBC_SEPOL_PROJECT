@@ -64,6 +64,14 @@
             let metaAcc = (await document.getElementById("currentMetaAcc"))
             metaAcc.value = ethKey[0]
         })()
+    
+        window.ethereum.on('accountsChanged', function (accounts) {
+            window.location = "/logout";
+        })
+    
+        window.ethereum.on('chainChanged', function (chainId) {
+            window.location = "/logout";
+        })
     </script>
 
 </html>

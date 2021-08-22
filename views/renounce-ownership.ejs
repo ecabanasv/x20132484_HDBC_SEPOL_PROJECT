@@ -67,5 +67,13 @@
         <% include static/footer %>
 </body>
 <% include static/scripts %>
+<script>
+    window.ethereum.on('accountsChanged', function (accounts) {
+        window.location = "/logout";
+    })
 
+    window.ethereum.on('chainChanged', function (chainId) {
+        window.location = "/logout";
+    })
+</script>
 </html>

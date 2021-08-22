@@ -86,7 +86,7 @@ exports.regiter_bike_post = [
     .isLength({ min: 4, max: 15 })
     .escape()
     .withMessage(
-      "Make must be specified and less than 15 alphanumeric characters"
+      "Make must be specified and less than 15 alphanumeric characters."
     )
     .isAlphanumeric()
     .withMessage("Make has non-alphanumeric characters."),
@@ -95,7 +95,7 @@ exports.regiter_bike_post = [
     .isLength({ min: 4, max: 15 })
     .escape()
     .withMessage(
-      "Model must be specified and less than 15 alphanumeric characters"
+      "Model must be specified and less than 15 alphanumeric characters."
     )
     .isAlphanumeric()
     .withMessage("Model name has non-alphanumeric characters."),
@@ -105,19 +105,19 @@ exports.regiter_bike_post = [
     .escape()
     .withMessage("Frame must be specified also in between 7 to 10 numbers.")
     .isNumeric()
-    .withMessage("Frame name has non-numeric characters"),
+    .withMessage("Frame name has non-numeric characters."),
   body("inputName")
     .trim()
     .isLength({ min: 2, max: 20 })
     .escape()
-    .withMessage("Name must be specified and less than 20 characters")
+    .withMessage("Name must be specified and less than 20 characters.")
     .isAlpha()
     .withMessage("Name has non-letters characters."),
   body("inputEmail")
     .trim()
     .isLength({ min: 4, max: 50 })
     .escape()
-    .withMessage("Email must be specified and less than 50 characters")
+    .withMessage("Email must be specified and less than 50 characters.")
     .isEmail()
     .withMessage("Email must be valid."),
   async (req, res) => {
@@ -393,14 +393,14 @@ exports.transfer_ownership_post = [
     .trim()
     .isLength({ min: 2, max: 20 })
     .escape()
-    .withMessage("Name must be specified and less than 20 characters")
+    .withMessage("Name must be specified and less than 20 characters.")
     .isAlpha()
     .withMessage("Name has non-letters characters."),
   body("inputEmail")
     .trim()
     .isLength({ min: 4, max: 50 })
     .escape()
-    .withMessage("Email must be specified and less than 50 characters")
+    .withMessage("Email must be specified and less than 50 characters.")
     .isEmail()
     .withMessage("Email must be valid."),
   body("inputNewAddress")
